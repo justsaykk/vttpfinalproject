@@ -22,30 +22,41 @@
 
     <!-- Body -->
     <section>
-        <div class="album py-5 px-0 bg-light">
-            <div class="container">
-                <h1>{{queryIngredient | titlecase}}</h1>
+        <div class="container">
+            <h1>{{queryIngredient | titlecase}}</h1>
 
-                <div class="wrapper center" *ngIf="listOfDrinks.length <= 0">
-                    <mat-spinner></mat-spinner>
-                </div>
-
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                    <div class="col" *ngFor="let drink of listOfDrinks">
-                        <div class="card shadow-sm">
-                            <img [src]="drink.strDrinkThumb">
-                          <div class="card-body">
-                            <p class="card-text" style="font-weight: bold;">{{drink.strDrink}}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                              <div class="btn-group">
-                                <button mat-raised-button color="primary" (click)="addToCart(drink)">Add to Cart</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                </div>
+            <div class="wrapper center" *ngIf="!listOfDrinks.length">
+                <mat-spinner></mat-spinner>
             </div>
+
+            <mat-grid-list cols="4">
+                <mat-grid-tile *ngFor="let drink of listOfDrinks">
+                    <mat-card>
+                        <img mat-card-image [src]="drink.strDrinkThumb">
+                        <mat-card-content style="font-weight: bold;">{{drink.strDrink}}</mat-card-content>
+                        <mat-card-actions>
+                            <button mat-raised-button color="primary" (click)="addToCart(drink)">Add to Cart</button>
+                            <button mat-raised-button color="basic" (click)="learnMore(drink)">Learn More</button>
+                        </mat-card-actions>
+                    </mat-card>
+                </mat-grid-tile>
+            </mat-grid-list>
+
+            <!-- <div class="row">
+                <div class="col" *ngFor="let drink of listOfDrinks">
+                    <div class="card">
+                        <img [src]="drink.strDrinkThumb" style="width:256px;height:256px;">
+                        <div class="card-body">
+                        <p class="card-text" style="font-weight: bold;">{{drink.strDrink}}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                            <button mat-raised-button color="primary" (click)="addToCart(drink)">Add to Cart</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+            </div> -->
         </div>
     </section>
 
@@ -56,10 +67,6 @@
             <p>&copy; 2017–2022 Drink Factory, Inc.</p>
         </footer>
     </section>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>

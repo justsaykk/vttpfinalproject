@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { PopupCartComponent } from './components/popup-cart/popup-cart.component';
 import { Drink } from './models/models';
 import { ShoppingcartService } from './services/shoppingcart.service';
 
@@ -11,7 +13,9 @@ import { ShoppingcartService } from './services/shoppingcart.service';
 })
 export class AppComponent implements OnInit, OnDestroy{
 
-  constructor(private cartSvc: ShoppingcartService) { }
+  constructor(
+    private cartSvc: ShoppingcartService,
+    private popUpCart: MatDialog) { }
 
   title = 'Drink Factory';
   shoppingCart$!: Subscription;
@@ -38,9 +42,11 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   toggleBadgeVisibility() {
-    if (this.shoppingCart.length) {
-      this.isHidden = false;
-    }
+    this.shoppingCart.length ? this.isHidden = false : this.isHidden = true
+  }
+
+  openPopUpCart() {
+    this.popUpCart.open(PopupCartComponent)
   }
 
 }

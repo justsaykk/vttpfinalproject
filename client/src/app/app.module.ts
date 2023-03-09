@@ -12,13 +12,15 @@ import { RegistrationComponent } from './pages/registration/registration.compone
 import { LoginComponent } from './pages/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ShopcartpopupComponent } from './components/shopcartpopup/shopcartpopup.component';
+import { PopupCartComponent } from './components/popup-cart/popup-cart.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 
 const routes:Routes = [
   {path: "", component: HomeComponent},
   {path: "login", component: LoginComponent},
   {path: "registration", component: RegistrationComponent},
   {path: "menu", component: MenuComponent},
+  {path: "checkout", component: CheckoutComponent},
   {path: "**", redirectTo: "/", pathMatch: "full"}
 ]
 
@@ -29,7 +31,8 @@ const routes:Routes = [
     MenuComponent,
     RegistrationComponent,
     LoginComponent,
-    ShopcartpopupComponent,
+    PopupCartComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,
