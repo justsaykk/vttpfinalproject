@@ -1,12 +1,13 @@
 <h1 mat-dialog-title>{{title}}</h1>
 <div mat-dialog-content>
     <table>
-        <div *ngIf="shoppingCart.length <= 0">
+        <div *ngIf="!shoppingCart.length">
             <mat-card-content>Shopping cart is empty!</mat-card-content>
         </div>
-        <tr *ngFor="let drink of shoppingCart">
-            <td><img [src]="drink.strDrinkThumb" style="width:128px;height:128px;"></td>
-            <td><p style="font-weight: bold;">{{drink.strDrink}}</p></td>
+        <tr *ngFor="let item of cartItems">
+            <td><img [src]="item.drink.strDrinkThumb" style="width:128px;height:128px;"></td>
+            <td><p style="font-weight: bold;">{{item.drink.strDrink}}</p></td>
+            <td><p>{{item.quantity}}</p></td>
             <td><p>Price: TBD</p></td>
         </tr>
     </table>
