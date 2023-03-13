@@ -13,14 +13,10 @@ export class HttpService {
   // Section of Behavior Subjects
   private listOfDrinks = new BehaviorSubject<Drink[]>([]);
 
-
-
-
   // Getters & Setters
   public getListOfDrinks(): Observable<Drink[]> {
     return this.listOfDrinks;
   }
-
 
   // When /menu is hit, ngOnInit will call this method to load the menu items
   public loadMenu(ingredient: string): void {

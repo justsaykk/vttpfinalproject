@@ -30,13 +30,15 @@ public class RESTController {
     @GetMapping(path = "/menu")
     public ResponseEntity<String> getMenu(
         @RequestParam(name = "ingredient") String ingredient) {
-        System.out.printf("Received get request at /menu for %s\n", ingredient);
+        // System.out.printf("Received get request at /menu for %s\n", ingredient);
+
         String searchTerm = ingredient.toLowerCase().replaceAll(" ", "+");
         List<Drink> listOfCocktails = apiSvc.fetchDrinksByIngredients(searchTerm);
         JsonArrayBuilder jab = Json.createArrayBuilder();
         listOfCocktails.stream().forEach((drink) -> jab.add(drink.toJson()));
-
-        try { // This is to proc the progress spinner in Angular hahahaha
+        
+        // This is to proc the progress spinner in Angular hahahaha
+        try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();

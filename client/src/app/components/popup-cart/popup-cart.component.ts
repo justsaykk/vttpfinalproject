@@ -28,4 +28,8 @@ export class PopupCartComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
       this.cartItems$.unsubscribe();
   }
+
+  public removeFromCartItems(item: CartItem): void {
+    this.cartSvc.removeFromShoppingCart(item.drink);
+  }
 }

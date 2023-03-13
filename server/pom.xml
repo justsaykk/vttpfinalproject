@@ -58,6 +58,12 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<version>8.0.31</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.stripe/stripe-java -->
+		<dependency>
+			<groupId>com.stripe</groupId>
+			<artifactId>stripe-java</artifactId>
+			<version>22.12.0</version>
+		</dependency>
 	</dependencies>
 
 

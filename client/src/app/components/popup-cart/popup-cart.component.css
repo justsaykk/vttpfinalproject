@@ -11,3 +11,7 @@
 td {
     padding-left: 20px;
 }
+
+thead > tr > td {
+    font-weight: bold;
+}

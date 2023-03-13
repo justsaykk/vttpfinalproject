@@ -3,6 +3,7 @@ export interface Drink {
     strDrink: string
     strDrinkThumb: string
     strDrinkImage: string
+    price: number
 }
 
 export interface Ingredient {

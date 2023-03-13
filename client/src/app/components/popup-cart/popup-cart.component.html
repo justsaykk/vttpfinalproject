@@ -3,29 +3,31 @@
     <div *ngIf="!cartItems.length">
         <mat-card-content>Shopping cart is empty!</mat-card-content>
     </div>
-    <table>
-        <thead>
-            <tr>
-                <td></td>
-                <td>Drink</td>
-                <td>Qty</td>
-                <td>Price</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of cartItems">
-                <td><img [src]="item.drink.strDrinkThumb" style="width:64px;height:64px;"></td>
-                <td><p style="font-weight: bold;">{{item.drink.strDrink}}</p></td>
-                <td><p>{{item.quantity}}</p></td>
-                <td><p>Price: TBD</p></td>
-                <td>
-                    <button mat-icon-button color="basic">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div *ngIf="cartItems.length">
+        <table>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Drink</td>
+                    <td>Qty</td>
+                    <td>Price</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of cartItems">
+                    <td><img [src]="item.drink.strDrinkThumb" style="width:64px;height:64px;"></td>
+                    <td><p>{{item.drink.strDrink}}</p></td>
+                    <td><p>{{item.quantity}}</p></td>
+                    <td><p>{{item.drink.price * item.quantity | currency}}</p></td>
+                    <td>
+                        <button mat-icon-button color="basic" (click)="removeFromCartItems(item)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </mat-dialog-content>
 <mat-dialog-actions class="center">
     <button mat-dialog-close mat-raised-button color="warn">Back</button>

@@ -1,5 +1,7 @@
 package com.vttpfinalproject.backend.models;
 
+import java.util.Random;
+
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import lombok.Data;
@@ -10,6 +12,9 @@ public class Drink {
     private String strDrink;
     private String strDrinkThumb;
     private String strDrinkImage;
+    private int price;
+    private int maxPrice = 15;
+    private int minPrice = 5;
 
     
     public Drink(JsonObject jo) {
@@ -17,6 +22,8 @@ public class Drink {
         this.strDrink = jo.getString("strDrink");
         this.strDrinkImage = jo.getString("strDrinkThumb");
         this.strDrinkThumb = this.strDrinkImage + "/preview";
+        Random random = new Random();
+        this.price = random.nextInt(maxPrice - minPrice + 1) + minPrice;
     }
 
     public JsonObject toJson() {
@@ -25,6 +32,7 @@ public class Drink {
         .add("strDrink", this.strDrink)
         .add("strDrinkThumb", this.strDrinkThumb)
         .add("strDrinkImage", this.strDrinkImage)
+        .add("price", this.price)
         .build();
     }
 }
