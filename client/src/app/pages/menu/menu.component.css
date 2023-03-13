@@ -3,3 +3,8 @@
     justify-content: center;
     align-items: center;
 }
+
+mat-card {
+    height: fit-content;
+    box-sizing: border-box;
+  }

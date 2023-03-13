@@ -30,6 +30,7 @@ public class RESTController {
     @GetMapping(path = "/menu")
     public ResponseEntity<String> getMenu(
         @RequestParam(name = "ingredient") String ingredient) {
+        System.out.printf("Received get request at /menu for %s\n", ingredient);
         String searchTerm = ingredient.toLowerCase().replaceAll(" ", "+");
         List<Drink> listOfCocktails = apiSvc.fetchDrinksByIngredients(searchTerm);
         JsonArrayBuilder jab = Json.createArrayBuilder();

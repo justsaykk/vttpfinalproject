@@ -36,7 +36,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   addToCart(drink: Drink) {
-    this.cartSvc.addToCart(drink)
+    this.cartSvc.addToShoppingCart(drink)
     this._snackBar.open('Added to cart!', 'OK!', {duration: 3000})
   }
 

@@ -1,18 +1,36 @@
 <h1 mat-dialog-title>{{title}}</h1>
-<div mat-dialog-content>
-    <table>
-        <div *ngIf="!shoppingCart.length">
-            <mat-card-content>Shopping cart is empty!</mat-card-content>
-        </div>
-        <tr *ngFor="let item of cartItems">
-            <td><img [src]="item.drink.strDrinkThumb" style="width:128px;height:128px;"></td>
-            <td><p style="font-weight: bold;">{{item.drink.strDrink}}</p></td>
-            <td><p>{{item.quantity}}</p></td>
-            <td><p>Price: TBD</p></td>
-        </tr>
-    </table>
-    <div mat-dialog-actions>
-        <button mat-dialog-close mat-raised-button color="warn">Back</button>
-        <button mat-dialog-close mat-raised-button color="primary" routerLink="/checkout">Send to Bar</button>
+<mat-dialog-content class="dialog-content">
+    <div *ngIf="!cartItems.length">
+        <mat-card-content>Shopping cart is empty!</mat-card-content>
     </div>
-</div>
+    <table>
+        <thead>
+            <tr>
+                <td></td>
+                <td>Drink</td>
+                <td>Qty</td>
+                <td>Price</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of cartItems">
+                <td><img [src]="item.drink.strDrinkThumb" style="width:64px;height:64px;"></td>
+                <td><p style="font-weight: bold;">{{item.drink.strDrink}}</p></td>
+                <td><p>{{item.quantity}}</p></td>
+                <td><p>Price: TBD</p></td>
+                <td>
+                    <button mat-icon-button color="basic">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</mat-dialog-content>
+<mat-dialog-actions class="center">
+    <button mat-dialog-close mat-raised-button color="warn">Back</button>
+    <span class="spacer"></span>
+    <button mat-dialog-close mat-raised-button color="primary" routerLink="/checkout">Send to Bar</button>
+</mat-dialog-actions>
+
+
