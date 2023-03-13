@@ -4,7 +4,11 @@
     align-items: center;
 }
 
-mat-card {
-    height: fit-content;
-    box-sizing: border-box;
-  }
+.content {
+    padding: 16px;
+}
+
+.content > mat-card {
+    width: 200px;
+}
+

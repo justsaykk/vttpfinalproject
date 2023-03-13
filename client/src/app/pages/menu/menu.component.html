@@ -1,5 +1,5 @@
 <body>
-    <!-- Header Section -->
+    Header Section
     <section class="py-1 text-center container">
         <div class="row">
             <img src="../../../assets/menu-header-image.jpeg"
@@ -19,32 +19,22 @@
                 <mat-spinner></mat-spinner>
             </div>
 
-            <div>
-                <mat-grid-list cols="4">
-                    <mat-grid-tile *ngFor="let drink of listOfDrinks">
-                        <mat-card>
-                            <mat-card-content>
-                                <img mat-card-image [src]="drink.strDrinkThumb">
-                                <p style="font-weight: bold;">
-                                    {{drink.strDrink}}
-                                </p>
-                            </mat-card-content>
-                            <mat-card-actions align="end">
-                                <button mat-flat-button color="primary" (click)="addToCart(drink)">Add to Cart</button>
-                                <button mat-flat-button color="basic" (click)="learnMore(drink)">Learn More</button>
-                            </mat-card-actions>
-                        </mat-card>
-                    </mat-grid-tile>
-                </mat-grid-list>
-            </div>
+            <mat-grid-list cols="4" rowHeight="340px">
+                <mat-grid-tile *ngFor="let drink of listOfDrinks">
+                    <mat-card style="height: fit-content; box-sizing: border-box;">
+                        <mat-card-content>
+                            <img mat-card-image [src]="drink.strDrinkThumb">
+                            <p style="font-weight: bold;">
+                                {{drink.strDrink}}
+                            </p>
+                        </mat-card-content>
+                        <mat-card-actions align="end">
+                            <button mat-flat-button color="primary" (click)="addToCart(drink)">Add to Cart</button>
+                            <button mat-flat-button color="basic" (click)="learnMore(drink)">Learn More</button>
+                        </mat-card-actions>
+                    </mat-card>
+                </mat-grid-tile>
+            </mat-grid-list>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <section>
-        <footer class="container" style="padding-top: 50px;">
-            <p class="float-end"><a href="#">Back to top</a></p>
-            <p>&copy; 2017–2022 Drink Factory, Inc.</p>
-        </footer>
     </section>
 </body>
