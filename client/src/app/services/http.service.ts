@@ -1,14 +1,15 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Drink } from '../models/models';
+import { BehaviorSubject, firstValueFrom, Observable, Subscription } from 'rxjs';
+import { CartItem, Drink } from '../models/models';
+import { ShoppingcartService } from './shoppingcart.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
   BASE_URL: string = "http://localhost:8080/api"
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private cart: ShoppingcartService) { }
 
   // Section of Behavior Subjects
   private listOfDrinks = new BehaviorSubject<Drink[]>([]);
@@ -27,4 +28,25 @@ export class HttpService {
       r => this.listOfDrinks.next(r.result)
     )
   }
-}
+
+  public postCart(): void {
+    let postUrl: string = this.BASE_URL + "/payment";
+    let shoppingCart: CartItem[] = []
+    let shoppingCart$!: Subscription
+    shoppingCart$ = this.cart.getCartItems().subscribe(
+      (currentCart: CartItem[]) => {shoppingCart = currentCart;}
+    );
+    shoppingCart$.unsubscribe()
+
+    let headers = new HttpHeaders()
+    .set("Content-Type", "application/json")
+    .set("Accept", "application/json")
+
+    // Flatten the object
+
+
+    firstValueFrom(
+      this.http.post<CartItem[]>(postUrl, shoppingCart, {headers}))
+      .then(() => console.log("Posted!"))
+  }
+ }

@@ -14,6 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PopupCartComponent } from './components/popup-cart/popup-cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { SuccessComponent } from './pages/success/success.component';
+import { CancelComponent } from './pages/cancel/cancel.component';
 
 const routes:Routes = [
   {path: "", component: HomeComponent},
@@ -21,6 +23,8 @@ const routes:Routes = [
   {path: "registration", component: RegistrationComponent},
   {path: "menu", component: MenuComponent},
   {path: "checkout", component: CheckoutComponent},
+  {path: "success", component: SuccessComponent},
+  {path: "cancel", component: CancelComponent},
   {path: "**", redirectTo: "/", pathMatch: "full"}
 ]
 
@@ -33,6 +37,8 @@ const routes:Routes = [
     LoginComponent,
     PopupCartComponent,
     CheckoutComponent,
+    SuccessComponent,
+    CancelComponent,
   ],
   imports: [
     BrowserModule,

@@ -5,8 +5,9 @@ import java.util.Random;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
+@Data @NoArgsConstructor
 public class Drink {
     private String idDrink;
     private String strDrink;

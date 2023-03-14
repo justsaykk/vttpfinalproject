@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CartItem } from 'src/app/models/models';
 import { ShoppingcartService } from 'src/app/services/shoppingcart.service';
+import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-checkout',
@@ -11,7 +12,8 @@ import { ShoppingcartService } from 'src/app/services/shoppingcart.service';
 export class CheckoutComponent implements OnInit, OnDestroy {
   
   constructor(
-    private cartSvc: ShoppingcartService, 
+    private cartSvc: ShoppingcartService,
+    private httpSvc: HttpService,
   ) { }
 
   cartItems$!: Subscription
@@ -31,6 +33,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   public removeFromCartItems(item: CartItem): void {
     this.cartSvc.removeFromShoppingCart(item.drink);
+  }
+
+  public pay(): void {
+    this.httpSvc.postCart();
   }
 
 }

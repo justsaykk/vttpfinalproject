@@ -1,18 +1,21 @@
 spring:
 # MySQL properties
-    datasource:
-        url: jdbc:mysql://localhost:3306/vttpfinalproject
-        username: vttpfinalproject
-        password: vttpfinalproject
+  datasource:
+      url: jdbc:mysql://localhost:3306/vttpfinalproject
+      username: vttpfinalproject
+      password: vttpfinalproject
 # MongoDB properties
-    data:
-      mongodb:
-        host: localhost
-        port: 27017
-        # username:
-        # password:
-        database: vttpfinalproject
-        authentication-database: admin
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      # username:
+      # password:
+      database: vttpfinalproject
+      authentication-database: admin
+  stripe:
+    apikey: ${STRIPE_SECRET}
+  
 logging:
   level:
     org:
