@@ -23,8 +23,8 @@ const routes:Routes = [
   {path: "registration", component: RegistrationComponent},
   {path: "menu", component: MenuComponent},
   {path: "checkout", component: CheckoutComponent},
-  {path: "success", component: SuccessComponent},
-  {path: "cancel", component: CancelComponent},
+  {path: "payment/success", component: SuccessComponent},
+  {path: "payment/cancel", component: CancelComponent},
   {path: "**", redirectTo: "/", pathMatch: "full"}
 ]
 

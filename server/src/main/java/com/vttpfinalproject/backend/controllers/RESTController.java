@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stripe.exception.StripeException;
+import com.stripe.model.checkout.Session;
 import com.vttpfinalproject.backend.models.CartItem;
 import com.vttpfinalproject.backend.models.Drink;
 import com.vttpfinalproject.backend.services.DrinkService;
@@ -23,6 +24,7 @@ import com.vttpfinalproject.backend.services.StripeService;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArrayBuilder;
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -38,29 +40,30 @@ public class RESTController {
     @GetMapping(path = "/menu")
     public ResponseEntity<String> getMenu(
         @RequestParam(name = "ingredient") String ingredient) {
-        // System.out.printf("Received get request at /menu for %s\n", ingredient);
+            String searchTerm = ingredient.toLowerCase().replaceAll(" ", "+");
+            List<Drink> listOfCocktails = drinkSvc.fetchDrinksByIngredients(searchTerm);
+            JsonArrayBuilder jab = Json.createArrayBuilder();
+            listOfCocktails.stream().forEach((drink) -> jab.add(drink.toJson()));
+            
+            // This is to proc the progress spinner in Angular hahahaha
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-        String searchTerm = ingredient.toLowerCase().replaceAll(" ", "+");
-        List<Drink> listOfCocktails = drinkSvc.fetchDrinksByIngredients(searchTerm);
-        JsonArrayBuilder jab = Json.createArrayBuilder();
-        listOfCocktails.stream().forEach((drink) -> jab.add(drink.toJson()));
-        
-        // This is to proc the progress spinner in Angular hahahaha
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        return new ResponseEntity<String>(
-        Json.createObjectBuilder().add("result", jab).build().toString()
-        , HttpStatus.OK);
+            return new ResponseEntity<String>(
+            Json.createObjectBuilder().add("result", jab).build().toString()
+            , HttpStatus.OK);
     }
 
-    @PostMapping(path = "/payment", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void processPayment(
-        @RequestBody CartItem[] cartItems
-    ) throws StripeException {
-        stripeSvc.toStripePayments(cartItems);
+    @PostMapping(path = "/create-checkout-session", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> processPayment(
+        @RequestBody CartItem[] cartItems, HttpServletResponse httpServletResponse) throws StripeException {
+            Session session = stripeSvc.createSession(cartItems);
+            
+            return new ResponseEntity<String>(
+            Json.createObjectBuilder().add("redirectUrl", session.getUrl()).build().toString()    
+            , HttpStatus.OK);
     }
 }

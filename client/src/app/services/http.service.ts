@@ -30,7 +30,7 @@ export class HttpService {
   }
 
   public postCart(): void {
-    let postUrl: string = this.BASE_URL + "/payment";
+    let postUrl: string = this.BASE_URL + "/create-checkout-session";
     let shoppingCart: CartItem[] = []
     let shoppingCart$!: Subscription
     shoppingCart$ = this.cart.getCartItems().subscribe(
@@ -46,7 +46,7 @@ export class HttpService {
 
 
     firstValueFrom(
-      this.http.post<CartItem[]>(postUrl, shoppingCart, {headers}))
-      .then(() => console.log("Posted!"))
+      this.http.post<{redirectUrl: string}>(postUrl, shoppingCart, {headers}))
+      .then((res) => window.location.href = res.redirectUrl)
   }
  }

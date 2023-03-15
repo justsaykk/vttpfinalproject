@@ -20,7 +20,7 @@
                         <td><img [src]="item.drink.strDrinkThumb" style="width:64px;height:64px;"></td>
                         <td><p style="font-weight: bold;">{{item.drink.strDrink}}</p></td>
                         <td><p>{{item.quantity}}</p></td>
-                        <td><p>{{item.quantity * item.drink.price}}</p></td>
+                        <td><p>{{item.quantity * item.drink.price | currency}}</p></td>
                         <td>
                             <button mat-icon-button color="basic" (click)="removeFromCartItems(item)">
                                 <mat-icon>delete</mat-icon>

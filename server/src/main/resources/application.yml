@@ -15,6 +15,7 @@ spring:
       authentication-database: admin
   stripe:
     apikey: ${STRIPE_SECRET}
+  clienturl: http://localhost:4200
   
 logging:
   level:
