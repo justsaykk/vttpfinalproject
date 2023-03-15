@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{title}}</h1>
 <mat-dialog-content class="dialog-content">
-    <div *ngIf="!cartItems.length">
+    <div *ngIf="!cartItems.length" style="min-height: 200px; min-width: 300px; display: flex; justify-content: center;">
         <mat-card-content>Shopping cart is empty!</mat-card-content>
     </div>
     <div *ngIf="cartItems.length">

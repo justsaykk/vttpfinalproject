@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { Drink } from 'src/app/models/models';
-import { ListOfIngredients } from 'src/app/models/staticdata';
 import { HttpService } from 'src/app/services/http.service';
 import { ShoppingcartService } from 'src/app/services/shoppingcart.service';
 
@@ -19,16 +18,19 @@ export class MenuComponent implements OnInit, OnDestroy {
     ) { }
 
   listOfDrinks$!: Subscription;
-  listOfDrinks!: Drink[]
-  listOfIngredients = ListOfIngredients
-  queryIngredient: string = "whiskey";
+  queryIngredient$!: Subscription;
+  listOfDrinks!: Drink[];
+  queryIngredient!: string;
 
 
   ngOnInit(): void {
-    this.httpSvc.loadMenu(this.queryIngredient);
     this.listOfDrinks$ = this.httpSvc.getListOfDrinks().subscribe(
       (r) => {this.listOfDrinks = r}
     )
+    this.queryIngredient$ = this.httpSvc.getSearchIngredient().subscribe(
+      (r) => {this.queryIngredient = r}
+    )
+    this.httpSvc.loadMenu(this.queryIngredient);
   }
 
   ngOnDestroy(): void {

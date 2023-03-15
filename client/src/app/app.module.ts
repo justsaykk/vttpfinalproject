@@ -16,6 +16,7 @@ import { PopupCartComponent } from './components/popup-cart/popup-cart.component
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { SuccessComponent } from './pages/success/success.component';
 import { CancelComponent } from './pages/cancel/cancel.component';
+import { SearchComponent } from './components/search/search.component';
 
 const routes:Routes = [
   {path: "", component: HomeComponent},
@@ -39,6 +40,7 @@ const routes:Routes = [
     CheckoutComponent,
     SuccessComponent,
     CancelComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
