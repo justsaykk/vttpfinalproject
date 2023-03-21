@@ -1,32 +1,46 @@
+<link rel="stylesheet" type="text/css"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" type="text/css"
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+<script type="text/javascript"
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
   <span class="spacer"></span>
-    <mat-card class="box">
-      <mat-card-header>
-        <mat-card-title>Log in</mat-card-title>
-      </mat-card-header>
-      <form class="login-form">
-        <mat-card-content>
-          <mat-form-field class="example-full-width">
-            <input matInput placeholder="Username">
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <input matInput placeholder="Password">
-          </mat-form-field>
-        </mat-card-content>
-          <div style="display: flexbox;">
-            <button mat-raised-button color="primary" class="btn-block" type="submit">Log In</button>
-            <span class="spacer"></span>
-            <button mat-raised-button color="basic" class="btn-block" routerLink="/">Back</button>
-          </div>
-      </form>
-      <div style="padding: 2% 0 2% 0;">
-        Don't have an account? <br>
-        <a routerLink="/registration">Register Now!</a>
+  <mat-card class="box">
+    <mat-card-header>
+      <mat-card-title>Log in</mat-card-title>
+    </mat-card-header>
+    <form class="login-form">
+      <mat-card-content>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Username">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Password">
+        </mat-form-field>
+      </mat-card-content>
+      <div style="display: flexbox;">
+        <button mat-raised-button color="primary" class="btn-block" type="submit">Log In</button>
+        <span class="spacer"></span>
+        <button mat-raised-button color="basic" class="btn-block" routerLink="/">Back</button>
       </div>
-      <div style="padding: 2% 0 2% 0;">
-        <mat-divider></mat-divider>
-      </div>
-      <p>TODO: Add OAuth2 options</p>
-    </mat-card>
-  <span class="spacer"></span>
+    </form>
+    <div style="padding: 2% 0 2% 0;">
+      Don't have an account? <br>
+      <a routerLink="/registration">Register Now!</a>
+    </div>
+    <div style="padding: 2% 0 2% 0;">
+      <mat-divider></mat-divider>
+    </div>
+    <div>
+      <button mat-stroked-button color="primary" style="width: 100%; margin-top: 10%;">
+          <i class="fab fa-google me-2"></i> Sign in with Google
+      </button>
+      <button mat-stroked-button color="basic" style="width: 100%; margin-top: 5%;" (click)="toLogin()">
+        <i class="fab fa-github me-2"></i> Sign in with Github
+    </button>
   </div>
+  </mat-card>
+  <span class="spacer"></span>
+</div>

@@ -19,24 +19,24 @@
             <div class="wrapper center" *ngIf="!listOfDrinks.length">
                 <mat-spinner></mat-spinner>
             </div>
-
-            <mat-grid-list cols="4" rowHeight="400px">
-                <mat-grid-tile *ngFor="let drink of listOfDrinks">
+            
+            <mat-grid-list cols="5" rowHeight="400px">
+                <mat-grid-tile *ngFor="let drink of listOfDrinks | paginate: {itemsPerPage: 10, currentPage: currentPage}">
                     <mat-card style="height: fit-content; box-sizing: border-box;">
                         <mat-card-content>
-                            <img mat-card-image [src]="drink.strDrinkThumb">
+                            <img mat-card-image [src]="drink.strDrinkThumb" style="height: 222.57px;">
                             <p style="font-weight: bold;">
                                 {{drink.strDrink}}
                             </p>
                             <mat-card-subtitle>{{drink.price | currency}}</mat-card-subtitle>
                         </mat-card-content>
                         <mat-card-actions align="end">
-                            <button mat-flat-button color="primary" (click)="addToCart(drink)">Add to Cart</button>
-                            <button mat-flat-button color="basic" (click)="learnMore(drink)">Learn More</button>
+                            <button mat-flat-button color="primary" (click)="addToCart(drink)" style="width: 100%;">Add to Cart</button>
                         </mat-card-actions>
                     </mat-card>
                 </mat-grid-tile>
             </mat-grid-list>
+            <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
         </div>
     </section>
 </body>

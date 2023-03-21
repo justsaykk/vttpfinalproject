@@ -23,31 +23,8 @@ public class StripeService {
     @Value("${spring.stripe.apikey}")
     private String stripeSecretKey;
 
-    @Value("${spring.clienturl}")
+    @Value("${spring.stripe.clienturl}")
     private String CLIENT_URL;
-
-    // public void toStripePayments(CartItem[] cart) throws StripeException {
-    //     port(4242);
-    //     Stripe.apiKey = stripeSecretKey;
-    //     final String DOMAIN = "http://localhost:4242";
-    //     List<SessionCreateParams.LineItem> listOfLineItems = this.createLineItems(cart);
-
-    //     staticFiles.externalLocation(
-    //         Paths.get("public").toAbsolutePath().toString());
-
-    //     post("/create-checkout-session", (request, response) -> {
-    //         SessionCreateParams params = SessionCreateParams.builder()
-    //             .setMode(SessionCreateParams.Mode.PAYMENT)
-    //             .setSuccessUrl(DOMAIN + "/success")
-    //             .setCancelUrl(DOMAIN + "/cancel")
-    //             .addAllLineItem(listOfLineItems)
-    //             .setExpiresAt((long)60*30) // Expires after 30 mins
-    //             .build();        
-    //       Session session = Session.create(params);
-    //       response.redirect(session.getUrl(), 303);
-    //       return "";
-    //     });
-    // }
 
     public Session createSession(CartItem[] cart) throws StripeException {
         Stripe.apiKey = stripeSecretKey;

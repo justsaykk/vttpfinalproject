@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { Drink } from 'src/app/models/models';
@@ -17,24 +18,27 @@ export class MenuComponent implements OnInit, OnDestroy {
     private cartSvc: ShoppingcartService
     ) { }
 
+  // Subscriptions
   listOfDrinks$!: Subscription;
   queryIngredient$!: Subscription;
+  
+  // Properties
   listOfDrinks!: Drink[];
   queryIngredient!: string;
-
+  currentPage: number = 1;
+  
 
   ngOnInit(): void {
     this.listOfDrinks$ = this.httpSvc.getListOfDrinks().subscribe(
-      (r) => {this.listOfDrinks = r}
-    )
+      (r) => { this.listOfDrinks = r })
     this.queryIngredient$ = this.httpSvc.getSearchIngredient().subscribe(
-      (r) => {this.queryIngredient = r}
-    )
+      (r) => { this.queryIngredient = r })
     this.httpSvc.loadMenu(this.queryIngredient);
   }
 
   ngOnDestroy(): void {
       this.listOfDrinks$.unsubscribe();
+      this.queryIngredient$.unsubscribe();
   }
 
   addToCart(drink: Drink) {
@@ -43,6 +47,6 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   learnMore(drink: Drink) {
-
+    // TODO: Implement Learn More button
   }
 }

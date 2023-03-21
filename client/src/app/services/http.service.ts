@@ -23,7 +23,6 @@ export class HttpService {
   public loadMenu(ingredient: string): void {
     let searchUrl: string = this.BASE_URL + "/menu";
     let params = new HttpParams().set("ingredient", ingredient)
-
     this.http.get<{result: Drink[]}>(searchUrl, {params}).subscribe(
       (r) => {
         this.listOfDrinks.next(r.result);
