@@ -11,12 +11,18 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.JsonSyntaxException;
+import com.stripe.exception.SignatureVerificationException;
 import com.stripe.exception.StripeException;
+import com.stripe.model.Event;
 import com.stripe.model.checkout.Session;
+import com.stripe.net.ApiResource;
+import com.stripe.net.Webhook;
 import com.vttpfinalproject.backend.models.CartItem;
 import com.vttpfinalproject.backend.models.Drink;
 import com.vttpfinalproject.backend.services.DrinkService;
@@ -24,7 +30,6 @@ import com.vttpfinalproject.backend.services.StripeService;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArrayBuilder;
-import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -33,7 +38,6 @@ public class RESTController {
 
     @Autowired
     private DrinkService drinkSvc;
-
     @Autowired
     private StripeService stripeSvc;
     
@@ -59,11 +63,34 @@ public class RESTController {
 
     @PostMapping(path = "/create-checkout-session", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> processPayment(
-        @RequestBody CartItem[] cartItems, HttpServletResponse httpServletResponse) throws StripeException {
-            Session session = stripeSvc.createSession(cartItems);
-            
+        @RequestBody CartItem[] cartItems) throws StripeException {
+            Session session = stripeSvc.createSession(cartItems);            
             return new ResponseEntity<String>(
             Json.createObjectBuilder().add("redirectUrl", session.getUrl()).build().toString()    
             , HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/checkoutsuccessevent")
+    public ResponseEntity<String> stripeListener(
+        @RequestBody String payload,
+        @RequestHeader(name = "Stripe-Signature") String stripeSignature
+    ) throws StripeException {
+
+        Event event = null;
+        try {
+            event = ApiResource.GSON.fromJson(payload, Event.class);
+        } catch (JsonSyntaxException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if(stripeSvc.endpointSecret != null && stripeSignature != null) {
+            try {
+                event = Webhook.constructEvent(payload, stripeSignature, stripeSvc.endpointSecret);
+            } catch (SignatureVerificationException e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        this.stripeSvc.stripeEventHandler(event);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

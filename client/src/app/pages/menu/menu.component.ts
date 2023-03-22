@@ -21,6 +21,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   // Subscriptions
   listOfDrinks$!: Subscription;
   queryIngredient$!: Subscription;
+  isLoading$!: Subscription;
   
   // Properties
   listOfDrinks!: Drink[];

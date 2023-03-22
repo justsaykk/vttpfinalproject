@@ -14,7 +14,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PopupCartComponent } from './components/popup-cart/popup-cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { SuccessComponent } from './pages/success/success.component';
-import { CancelComponent } from './pages/cancel/cancel.component';
 import { SearchComponent } from './components/search/search.component';
 import { AuthHeaderInterceptor } from './services/security/auth-header.interceptor';
 import { CallbackComponent } from './components/callback/callback.component';
@@ -30,7 +29,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     PopupCartComponent,
     CheckoutComponent,
     SuccessComponent,
-    CancelComponent,
     SearchComponent,
     CallbackComponent,
   ],

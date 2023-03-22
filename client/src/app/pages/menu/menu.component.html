@@ -3,7 +3,7 @@
     <section class="py-1 text-center container">
         <div class="row">
             <img src="../../../assets/menu-header-image.jpeg"
-            alt="" class="bd-placeholder-img" width="100%" height="400" 
+            alt="" class="bd-placeholder-img" width="100%" height="200" 
             preserveAspectRatio="xMidYMid slice" focusable="false" style="object-fit: cover;">
         </div>
     </section>
@@ -23,7 +23,7 @@
             <mat-grid-list cols="5" rowHeight="400px">
                 <mat-grid-tile *ngFor="let drink of listOfDrinks | paginate: {itemsPerPage: 10, currentPage: currentPage}">
                     <mat-card style="height: fit-content; box-sizing: border-box;">
-                        <mat-card-content>
+                        <mat-card-content style="border-radius: inherit;">
                             <img mat-card-image [src]="drink.strDrinkThumb" style="height: 222.57px;">
                             <p style="font-weight: bold;">
                                 {{drink.strDrink}}

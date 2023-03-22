@@ -21,6 +21,7 @@ export class HttpService {
 
   // When /menu is hit, ngOnInit will call this method to load the menu items
   public loadMenu(ingredient: string): void {
+    this.listOfDrinks.next([])
     let searchUrl: string = this.BASE_URL + "/menu";
     let params = new HttpParams().set("ingredient", ingredient)
     this.http.get<{result: Drink[]}>(searchUrl, {params}).subscribe(
@@ -47,5 +48,5 @@ export class HttpService {
     firstValueFrom(
       this.http.post<{redirectUrl: string}>(postUrl, shoppingCart, {headers}))
       .then((res) => window.location.href = res.redirectUrl)
-  }
+    }
  }
