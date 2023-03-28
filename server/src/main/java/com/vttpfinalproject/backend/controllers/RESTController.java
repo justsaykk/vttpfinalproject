@@ -70,22 +70,24 @@ public class RESTController {
             , HttpStatus.OK);
     }
 
-    @PostMapping(path = "/checkoutsuccessevent")
+    @PostMapping(path = "/checkoutsuccess")
     public ResponseEntity<String> stripeListener(
         @RequestBody String payload,
         @RequestHeader(name = "Stripe-Signature") String stripeSignature
     ) throws StripeException {
-
         Event event = null;
+        // This is your Stripe CLI webhook secret for testing your endpoint locally.
+        final String endpointSecret = "whsec_322f0ce16457c639b48d0c90f498be0570724e8eccb546d0bb38b2c5881043b8";
+
         try {
             event = ApiResource.GSON.fromJson(payload, Event.class);
         } catch (JsonSyntaxException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        if(stripeSvc.endpointSecret != null && stripeSignature != null) {
+        if(endpointSecret != null && stripeSignature != null) {
             try {
-                event = Webhook.constructEvent(payload, stripeSignature, stripeSvc.endpointSecret);
+                event = Webhook.constructEvent(payload, stripeSignature, endpointSecret);
             } catch (SignatureVerificationException e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }

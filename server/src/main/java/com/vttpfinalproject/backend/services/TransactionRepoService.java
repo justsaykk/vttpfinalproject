@@ -17,9 +17,14 @@ public class TransactionRepoService {
     private TransactionTable transactionRepo;
     @Autowired
     private TransactionDetailsRepo detailsRepo;
+    @Autowired
+    private SmsService sms;
 
     public void addTransaction(Session session) throws StripeException {
+        System.out.println("Adding to transaction DBs");
+        TransactionDetail tDetail = new TransactionDetail(session);
         transactionRepo.insertNewTransaction(new MySqlCheckoutSession(session));
-        detailsRepo.insertNewTransaction(new TransactionDetail(session));
+        detailsRepo.insertNewTransaction(tDetail);
+        sms.sendSms(tDetail);
     }
 }

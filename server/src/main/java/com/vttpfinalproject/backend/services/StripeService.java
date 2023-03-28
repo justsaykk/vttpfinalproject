@@ -33,16 +33,16 @@ public class StripeService {
     @Autowired
     private TransactionRepoService tRepoService;
 
-    // This is your Stripe CLI webhook secret for testing your endpoint locally.
-    public final String endpointSecret = "whsec_322f0ce16457c639b48d0c90f498be0570724e8eccb546d0bb38b2c5881043b8";
-
     public Session createSession(CartItem[] cart) throws StripeException {
         Stripe.apiKey = stripeSecretKey;
         List<SessionCreateParams.LineItem> listOfLineItems = this.createLineItems(cart);
+        SessionCreateParams.PhoneNumberCollection phoneNumberCollect = SessionCreateParams.PhoneNumberCollection.builder().setEnabled(true).build();
+
         SessionCreateParams params = SessionCreateParams.builder()
             .setMode(SessionCreateParams.Mode.PAYMENT)
             .setSuccessUrl(CLIENT_URL + "/payment/success")
             .setCancelUrl(CLIENT_URL + "/payment/cancel")
+            .setPhoneNumberCollection(phoneNumberCollect)
             .addAllLineItem(listOfLineItems)
             .build();
         return Session.create(params);

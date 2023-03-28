@@ -8,6 +8,7 @@ import com.stripe.model.LineItem;
 import com.stripe.model.Price;
 import com.stripe.model.Product;
 import com.stripe.model.checkout.Session;
+import com.stripe.model.checkout.Session.CustomerDetails;
 import com.stripe.param.checkout.SessionListLineItemsParams;
 
 import lombok.Getter;
@@ -17,16 +18,16 @@ import lombok.Setter;
 public class TransactionDetail {
     private String session_id;
     private String customer_email;
+    private String customer_phone;
     private List<CartItem> cartItems;
 
     public TransactionDetail(Session session) throws StripeException {
-
         SessionListLineItemsParams params = SessionListLineItemsParams.builder().build();
+        CustomerDetails customerDetails = session.getCustomerDetails();
         this.session_id = session.getId();
-        this.customer_email = session.getCustomerDetails().getEmail();
-        System.out.println(this.customer_email);
-        List<LineItem> lineItems = session.listLineItems(params).getData();
-        this.cartItems = this.toListCartItems(lineItems);
+        this.customer_email = customerDetails.getEmail();
+        this.customer_phone = customerDetails.getPhone();
+        this.cartItems = this.toListCartItems(session.listLineItems(params).getData());
     }
     
     private int longToInt(Long l) {
