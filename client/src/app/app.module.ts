@@ -8,16 +8,21 @@ import { MaterialModule } from './material/material.module';
 import { HomeComponent } from './pages/home/home.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
-import { LoginComponent } from './pages/login/login.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PopupCartComponent } from './components/popup-cart/popup-cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { SuccessComponent } from './pages/success/success.component';
 import { SearchComponent } from './components/search/search.component';
-import { AuthHeaderInterceptor } from './services/security/auth-header.interceptor';
-import { CallbackComponent } from './components/callback/callback.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { OKTA_CONFIG, OktaAuthModule, OktaConfig} from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
+import { LoginComponent } from './pages/login/login.component';
+import { LoginStatusComponent } from './components/login-status/login-status.component';
+import myAppConfig from './config/my-app-config';
+
+const oktaConfig = myAppConfig.oidc;
+const oktaAuth = new OktaAuth(oktaConfig);
 
 @NgModule({
   declarations: [
@@ -25,12 +30,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HomeComponent,
     MenuComponent,
     RegistrationComponent,
-    LoginComponent,
     PopupCartComponent,
     CheckoutComponent,
     SuccessComponent,
     SearchComponent,
-    CallbackComponent,
+    LoginComponent,
+    LoginStatusComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,12 +45,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HttpClientModule,
     ReactiveFormsModule,
     NgxPaginationModule,
+    OktaAuthModule,
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthHeaderInterceptor,
-    multi: true
-  }],
+  providers: [
+    {provide: OKTA_CONFIG, useValue: {oktaAuth}}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

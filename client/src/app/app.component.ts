@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PopupCartComponent } from './components/popup-cart/popup-cart.component';
 import { Drink } from './models/models';
