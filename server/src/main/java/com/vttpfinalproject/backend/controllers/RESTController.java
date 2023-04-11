@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -27,6 +28,7 @@ import com.vttpfinalproject.backend.models.CartItem;
 import com.vttpfinalproject.backend.models.Drink;
 import com.vttpfinalproject.backend.services.DrinkService;
 import com.vttpfinalproject.backend.services.StripeService;
+import com.vttpfinalproject.backend.services.TransactionRepoService;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArrayBuilder;
@@ -40,6 +42,9 @@ public class RESTController {
     private DrinkService drinkSvc;
     @Autowired
     private StripeService stripeSvc;
+
+    @Autowired
+    private TransactionRepoService tRxSvc;
     
     @GetMapping(path = "/menu")
     public ResponseEntity<String> getMenu(
@@ -77,9 +82,11 @@ public class RESTController {
     ) throws StripeException {
         Event event = null;
         // This is your Stripe CLI webhook secret for testing your endpoint locally.
+        // To make this a @Value once releasing to production
         final String endpointSecret = "whsec_322f0ce16457c639b48d0c90f498be0570724e8eccb546d0bb38b2c5881043b8";
 
         try {
+            // Checking if the Event JSON object conforms to the Event.class. If it doesn't => something wrong
             event = ApiResource.GSON.fromJson(payload, Event.class);
         } catch (JsonSyntaxException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -94,5 +101,15 @@ public class RESTController {
         }
         this.stripeSvc.stripeEventHandler(event);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/profile/{email}")
+    public ResponseEntity<String> getTransactionsByEmail(
+        @PathVariable(name = "email") String email
+    ) {
+        JsonArrayBuilder ja = tRxSvc.getTransactionsByEmail(email);
+        return new ResponseEntity<String>(
+            Json.createObjectBuilder().add("data", ja).build().toString(), 
+            HttpStatus.OK);
     }
 }

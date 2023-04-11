@@ -1,5 +1,7 @@
 package com.vttpfinalproject.backend.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,9 @@ import com.vttpfinalproject.backend.models.MySqlCheckoutSession;
 import com.vttpfinalproject.backend.models.TransactionDetail;
 import com.vttpfinalproject.backend.repository.TransactionDetailsRepo;
 import com.vttpfinalproject.backend.repository.TransactionTable;
+
+import jakarta.json.Json;
+import jakarta.json.JsonArrayBuilder;
 
 @Service
 public class TransactionRepoService {
@@ -26,5 +31,14 @@ public class TransactionRepoService {
         transactionRepo.insertNewTransaction(new MySqlCheckoutSession(session));
         detailsRepo.insertNewTransaction(tDetail);
         sms.sendSms(tDetail);
+    }
+
+    public JsonArrayBuilder getTransactionsByEmail(String email) {
+        List<TransactionDetail> tDetailList = detailsRepo.getTransactionByEmail(email);
+        JsonArrayBuilder jab = Json.createArrayBuilder();
+        tDetailList.stream().forEach((tDetail) -> {
+            jab.add(tDetail.toJson());
+        });
+        return jab;
     }
 }

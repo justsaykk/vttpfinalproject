@@ -1,7 +1,10 @@
 package com.vttpfinalproject.backend.models;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.bson.Document;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.LineItem;
@@ -11,6 +14,9 @@ import com.stripe.model.checkout.Session;
 import com.stripe.model.checkout.Session.CustomerDetails;
 import com.stripe.param.checkout.SessionListLineItemsParams;
 
+import jakarta.json.Json;
+import jakarta.json.JsonArrayBuilder;
+import jakarta.json.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,6 +35,22 @@ public class TransactionDetail {
         this.customer_phone = customerDetails.getPhone();
         this.cartItems = this.toListCartItems(session.listLineItems(params).getData());
     }
+
+    public TransactionDetail(Document doc) {
+        this.session_id = doc.getString("session_id");
+        this.customer_email = doc.getString("customer_email");
+        this.customer_phone = doc.getString("customer_phone");
+        List<CartItem> toSetList = new ArrayList<>();
+        List<Document> listOfCartItemDocs = doc.getList("cartItems", Document.class);
+        listOfCartItemDocs.stream().forEach((docCartItem) -> {
+            CartItem cartItem = new CartItem();
+            Drink d = new Drink(docCartItem.get("drink", Document.class));
+            cartItem.setQuantity(docCartItem.getInteger("quantity"));
+            cartItem.setDrink(d);
+            toSetList.add(cartItem);
+        });
+        this.cartItems = toSetList;
+    }
     
     private int longToInt(Long l) {
         return Integer.parseInt(Long.toString(l));
@@ -46,7 +68,8 @@ public class TransactionDetail {
                 try {
                     Product productObj = Product.retrieve(productId);
                     drink.setStrDrink(productObj.getName());
-                    drink.setStrDrinkImage(productObj.getImages().get(0));
+                    String drinkImage = productObj.getImages().get(0);
+                    drink.setStrDrinkImage(drinkImage);
                     drink.setIdDrink(productObj.getId().substring(0, productObj.getId().length() - 9));
                 } catch (StripeException e) {
                     e.printStackTrace();
@@ -60,5 +83,21 @@ public class TransactionDetail {
             }
         );
         return lineToCartItems;
+    }
+
+    public JsonObject toJson() {
+        JsonArrayBuilder jab = Json.createArrayBuilder();
+        this.cartItems.stream().forEach((item) -> {
+            jab.add(Json.createObjectBuilder()
+            .add("drink", item.getDrink().toJOB())
+            .add("quantity", item.getQuantity()));
+        });
+
+        return Json.createObjectBuilder()
+        .add("customer_email", this.customer_email)
+        .add("customer_phone", this.customer_phone)
+        .add("session_id", this.session_id)
+        .add("cart_items", jab)
+        .build();
     }
 }

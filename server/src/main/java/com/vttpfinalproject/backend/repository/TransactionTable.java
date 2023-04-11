@@ -15,5 +15,6 @@ public class TransactionTable {
     
     public void insertNewTransaction(MySqlCheckoutSession mySqlCheckoutSession) {
             repo.update(SQL_INSERT_TRANSACTION, mySqlCheckoutSession.getSession_id(), mySqlCheckoutSession.getAmount_total());
+            System.out.println("Inserting new SQL transaction");
     }
 }

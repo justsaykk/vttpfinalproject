@@ -25,7 +25,7 @@ public class SmsService {
 
         Twilio.init(twilioAccountSid, twilioToken);
         String messageBody = """
-                Thank you for your purchase, your drinks will be served shortly! - Drinks Factory
+                Thank you for your purchase, your drinks will be with you shortly! - Drinks Factory
                 """;
 
         Message.creator(
