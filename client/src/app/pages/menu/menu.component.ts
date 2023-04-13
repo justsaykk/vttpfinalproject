@@ -29,11 +29,11 @@ export class MenuComponent implements OnInit, OnDestroy {
   
 
   ngOnInit(): void {
-    this.listOfDrinks$ = this.httpSvc.getListOfDrinks().subscribe(
-      (r) => { this.listOfDrinks = r })
-    this.queryIngredient$ = this.httpSvc.getSearchIngredient().subscribe(
-      (r) => { this.queryIngredient = r })
     this.httpSvc.loadMenu(this.queryIngredient);
+    this.listOfDrinks$ = this.httpSvc.getListOfDrinks$().subscribe(
+      (r) => { this.listOfDrinks = r })
+    this.queryIngredient$ = this.httpSvc.getSearchIngredient$().subscribe(
+      (r) => { this.queryIngredient = r })
   }
 
   ngOnDestroy(): void {

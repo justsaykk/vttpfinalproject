@@ -37,8 +37,7 @@ public class DrinkService {
         JsonObject jo = httpSvc.readApiResponse(apiResponse);
         JsonArray jsonArray = jo.getJsonArray("drinks");
         for (int i = 0; i < jsonArray.size(); i++) {
-            JsonObject jsonDrinkElement = jsonArray.getJsonObject(i);
-            listOfCocktails.add(new Drink(jsonDrinkElement));
+            listOfCocktails.add(new Drink(jsonArray.getJsonObject(i)));
         }
         return listOfCocktails;
     }

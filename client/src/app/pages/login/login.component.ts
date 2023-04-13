@@ -22,7 +22,12 @@ export class LoginComponent implements OnInit {
         pkce: true, // Proof Key for Code Exchange
         issuer: myAppConfig.oidc.issuer,
         scopes: myAppConfig.oidc.scopes
-      }
+      },
+      idps: [
+        {type: 'GOOGLE', id: '0oa92xth97BiJbVT95d7'},
+        {type: 'GITHUB', id: '0oa92xr09xdcQ8JLI5d7'}
+      ],
+      idpDisplay: "SECONDARY"
     });
   }
 

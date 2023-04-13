@@ -15,3 +15,10 @@ export interface CartItem {
     drink: Drink
     quantity: number
   }
+
+export interface TransactionDetail {
+    session_id: string
+    customer_email: string
+    customer_phone: string
+    cart_items: CartItem[]
+}

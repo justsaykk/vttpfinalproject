@@ -7,8 +7,10 @@ import { RegistrationComponent } from './pages/registration/registration.compone
 import { SuccessComponent } from './pages/success/success.component';
 import { OktaCallbackComponent } from '@okta/okta-angular';
 import { LoginComponent } from './pages/login/login.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 const routes:Routes = [
+  {path: "profile/:email", component: ProfileComponent},
   {path: "", component: HomeComponent},
   {path: "registration", component: RegistrationComponent},
   {path: "menu", component: MenuComponent},

@@ -17,8 +17,6 @@ public class Drink {
     private String strDrinkThumb;
     private String strDrinkImage;
     private int price;
-    private int maxPrice = 15;
-    private int minPrice = 5;
 
     
     public Drink(JsonObject jo) {
@@ -27,7 +25,8 @@ public class Drink {
         this.strDrinkImage = jo.getString("strDrinkThumb");
         this.strDrinkThumb = this.strDrinkImage + "/preview";
         Random random = new Random();
-        this.price = random.nextInt(maxPrice - minPrice + 1) + minPrice;
+        // random.nextInt(maxPrice - minPrice + 1) + minPrice
+        this.price = random.nextInt(11) + 5;
     }
 
     public Drink(Document doc) {
