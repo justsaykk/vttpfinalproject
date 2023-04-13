@@ -44,9 +44,8 @@ public class TransactionDetail {
         List<Document> listOfCartItemDocs = doc.getList("cartItems", Document.class);
         listOfCartItemDocs.stream().forEach((docCartItem) -> {
             CartItem cartItem = new CartItem();
-            Drink d = new Drink(docCartItem.get("drink", Document.class));
             cartItem.setQuantity(docCartItem.getInteger("quantity"));
-            cartItem.setDrink(d);
+            cartItem.setDrink(new Drink(docCartItem.get("drink", Document.class)));
             toSetList.add(cartItem);
         });
         this.cartItems = toSetList;

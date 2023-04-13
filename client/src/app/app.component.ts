@@ -1,9 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { PopupCartComponent } from './components/popup-cart/popup-cart.component';
 import { Drink } from './models/models';
 import { ShoppingcartService } from './services/shoppingcart.service';
+import { OKTA_AUTH, OktaAuthStateService } from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +16,8 @@ export class AppComponent implements OnInit, OnDestroy{
 
   constructor(
     private cartSvc: ShoppingcartService,
-    private popUpCart: MatDialog) { }
+    private popUpCart: MatDialog,
+    ) { }
 
   title = 'Drink Factory';
   shoppingCart$!: Subscription;
@@ -47,5 +50,4 @@ export class AppComponent implements OnInit, OnDestroy{
   openPopUpCart() {
     this.popUpCart.open(PopupCartComponent)
   }
-
 }

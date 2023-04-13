@@ -15,7 +15,7 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { SuccessComponent } from './pages/success/success.component';
 import { SearchComponent } from './components/search/search.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { OKTA_CONFIG, OktaAuthModule, OktaConfig} from '@okta/okta-angular';
+import { OKTA_CONFIG, OktaAuthModule} from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { LoginComponent } from './pages/login/login.component';
 import { LoginStatusComponent } from './components/login-status/login-status.component';
@@ -24,6 +24,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 
 const oktaConfig = myAppConfig.oidc;
 const oktaAuth = new OktaAuth(oktaConfig);
+
 
 @NgModule({
   declarations: [
