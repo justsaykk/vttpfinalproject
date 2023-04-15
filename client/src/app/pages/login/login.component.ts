@@ -1,8 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import myAppConfig from "../../config/my-app-config"
-import { OKTA_AUTH, OktaAuthStateService } from '@okta/okta-angular';
-import {OktaAuth} from '@okta/okta-auth-js';
-import OktaSignIn from '@okta/okta-signin-widget';
+import { Component, OnInit } from '@angular/core';
+import { FirebaseUISignInSuccessWithAuthResult, FirebaseUISignInFailure, FirebaseuiAngularLibraryService } from 'firebaseui-angular';
 
 @Component({
   selector: 'app-login',
@@ -10,39 +7,22 @@ import OktaSignIn from '@okta/okta-signin-widget';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  oktaSignIn: any;
 
-  constructor(@Inject(OKTA_AUTH) private oktaAuth: OktaAuth, private authStateService: OktaAuthStateService ) { 
-    this.oktaSignIn = new OktaSignIn({
-      logo: 'assets/logo.jpeg',
-      baseUrl: myAppConfig.oidc.issuer.split('/oauth2')[0],
-      clientId: myAppConfig.oidc.clientId,
-      redirectUri: myAppConfig.oidc.redirectUri,
-      authParams: {
-        pkce: true, // Proof Key for Code Exchange
-        issuer: myAppConfig.oidc.issuer,
-        scopes: myAppConfig.oidc.scopes
-      },
-      idps: [
-        {type: 'GOOGLE', id: '0oa92xth97BiJbVT95d7'},
-        {type: 'GITHUB', id: '0oa92xr09xdcQ8JLI5d7'}
-      ],
-      idpDisplay: "SECONDARY"
-    });
-  }
+  constructor(
+    private firebaseuiAngularLibraryService: FirebaseuiAngularLibraryService
+  ) {
+    firebaseuiAngularLibraryService.firebaseUiInstance.disableAutoSignIn();
+   }
 
 
-  ngOnInit(): void {
-    this.oktaSignIn.remove();
-    this.oktaSignIn.renderEl({
-      el: '#okta-sign-in-widget'},
-      (res: any) => {
-        if (res.status === 'SUCCESS') {
-          this.oktaAuth.signInWithRedirect();
-        }
-      },
-      (error: any) => {throw error}
-      )
-  }
+  ngOnInit(): void { }
+
+  successCallback(signInSuccessData: FirebaseUISignInSuccessWithAuthResult){ }
+    
+  errorCallback(errorData: FirebaseUISignInFailure){ }
+  
+  uiShownCallback() {
+    console.log("UI is shown")
+   }
 
 }

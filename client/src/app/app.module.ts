@@ -15,16 +15,9 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { SuccessComponent } from './pages/success/success.component';
 import { SearchComponent } from './components/search/search.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { OKTA_CONFIG, OktaAuthModule} from '@okta/okta-angular';
-import { OktaAuth } from '@okta/okta-auth-js';
 import { LoginComponent } from './pages/login/login.component';
-import { LoginStatusComponent } from './components/login-status/login-status.component';
-import myAppConfig from './config/my-app-config';
 import { ProfileComponent } from './pages/profile/profile.component';
-
-const oktaConfig = myAppConfig.oidc;
-const oktaAuth = new OktaAuth(oktaConfig);
-
+import { FirebaseAuthModule } from './shared/firebase-auth/firebase-auth.module';
 
 @NgModule({
   declarations: [
@@ -37,7 +30,6 @@ const oktaAuth = new OktaAuth(oktaConfig);
     SuccessComponent,
     SearchComponent,
     LoginComponent,
-    LoginStatusComponent,
     ProfileComponent,
   ],
   imports: [
@@ -48,10 +40,9 @@ const oktaAuth = new OktaAuth(oktaConfig);
     HttpClientModule,
     ReactiveFormsModule,
     NgxPaginationModule,
-    OktaAuthModule,
+    FirebaseAuthModule
   ],
   providers: [
-    {provide: OKTA_CONFIG, useValue: {oktaAuth}}
   ],
   bootstrap: [AppComponent]
 })

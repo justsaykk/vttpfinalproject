@@ -38,11 +38,9 @@ export class HttpService {
   public postCart(): void {
     let postUrl: string = this.BASE_URL + "/create-checkout-session";
     let shoppingCart: CartItem[] = []
-    let shoppingCart$!: Subscription
-    shoppingCart$ = this.cart.getCartItems().subscribe(
-      (currentCart: CartItem[]) => {shoppingCart = currentCart;}
-    );
-    shoppingCart$.unsubscribe()
+    this.cart.getCartItems().subscribe(
+      (currentCart: CartItem[]) => {shoppingCart = currentCart}
+    ).unsubscribe();
 
     let headers = new HttpHeaders()
     .set("Content-Type", "application/json")

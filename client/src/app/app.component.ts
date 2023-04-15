@@ -4,8 +4,6 @@ import { Subscription } from 'rxjs';
 import { PopupCartComponent } from './components/popup-cart/popup-cart.component';
 import { Drink } from './models/models';
 import { ShoppingcartService } from './services/shoppingcart.service';
-import { OKTA_AUTH, OktaAuthStateService } from '@okta/okta-angular';
-import { OktaAuth } from '@okta/okta-auth-js';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +19,8 @@ export class AppComponent implements OnInit, OnDestroy{
 
   title = 'Drink Factory';
   shoppingCart$!: Subscription;
+  isAuthenticated$!: Subscription;
+  isAuthenticated!: boolean;
   shoppingCart!: Drink[]
   isHidden = true
   routes = [
@@ -41,6 +41,7 @@ export class AppComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
       this.shoppingCart$.unsubscribe();
+      this.isAuthenticated$.unsubscribe();
   }
 
   toggleBadgeVisibility() {

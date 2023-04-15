@@ -1,4 +1,5 @@
-<div>
-    <!-- To inject the Okta Sign in Widget -->
-    <div id="okta-sign-in-widget"></div>
-</div>
+
+<firebase-ui
+  (signInSuccessWithAuthResult)="successCallback($event)"
+  (signInFailure)="errorCallback($event)"
+  (uiShown)="uiShownCallback()"></firebase-ui>
