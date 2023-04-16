@@ -13,24 +13,25 @@ export class HttpService {
 
   // Section of Behavior Subjects
   private _listOfDrinks = new BehaviorSubject<Drink[]>([]);
-  private _searchIngredient = new BehaviorSubject<string>("whiskey");
+  private _searchIngredient = new BehaviorSubject<string>("rum");
   private _transactionsByEmail = new BehaviorSubject<TransactionDetail[]>([]);
 
-  // Getters & Setters
+  // Getters
   public getListOfDrinks$(): Observable<Drink[]> { return this._listOfDrinks }
   public getSearchIngredient$(): Observable<string> { return this._searchIngredient}
   public getTransactionsByEmail$(): Observable<TransactionDetail[]> {return this._transactionsByEmail}
+  public setSearchIngredients(ingredient: string): void { this._searchIngredient.next(ingredient) }
 
   // When /menu is hit, ngOnInit will call this method to load the menu items
   public loadMenu(ingredient: string): void {
+    this.setSearchIngredients(ingredient)
     this._listOfDrinks.next([])
     let searchUrl: string = this.BASE_URL + "/menu";
     let params = new HttpParams().set("ingredient", ingredient)
-    
+
     this.http.get<{result: Drink[]}>(searchUrl, {params}).subscribe(
       (r) => {
         this._listOfDrinks.next(r.result);
-        this._searchIngredient.next(ingredient);
       }
     )
   }
@@ -40,7 +41,7 @@ export class HttpService {
     let shoppingCart: CartItem[] = []
     this.cart.getCartItems().subscribe(
       (currentCart: CartItem[]) => {shoppingCart = currentCart}
-    ).unsubscribe();
+    );
 
     let headers = new HttpHeaders()
     .set("Content-Type", "application/json")

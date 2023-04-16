@@ -1,9 +1,12 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { PopupCartComponent } from './components/popup-cart/popup-cart.component';
 import { Drink } from './models/models';
 import { ShoppingcartService } from './services/shoppingcart.service';
+import { AuthService } from './services/auth.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -13,15 +16,18 @@ import { ShoppingcartService } from './services/shoppingcart.service';
 export class AppComponent implements OnInit, OnDestroy{
 
   constructor(
+    private router: Router,
     private cartSvc: ShoppingcartService,
     private popUpCart: MatDialog,
+    private authSvc: AuthService,
+    private _snackBar: MatSnackBar,
     ) { }
 
   title = 'Drink Factory';
   shoppingCart$!: Subscription;
+  shoppingCart!: Drink[]
   isAuthenticated$!: Subscription;
   isAuthenticated!: boolean;
-  shoppingCart!: Drink[]
   isHidden = true
   routes = [
     {route: "/", name: "Home"},
@@ -35,8 +41,9 @@ export class AppComponent implements OnInit, OnDestroy{
         (cart) => {
           this.shoppingCart = cart;
           this.toggleBadgeVisibility();
-        }
-      )
+        })
+      this.isAuthenticated$ = this.authSvc.getIsAuthenticated().subscribe(
+        (b) => { this.isAuthenticated = b })
   }
 
   ngOnDestroy(): void {
@@ -45,10 +52,16 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   toggleBadgeVisibility() {
-    this.shoppingCart.length ? this.isHidden = false : this.isHidden = true
+    this.isHidden = this.shoppingCart.length > 0 ? false : true;
   }
 
   openPopUpCart() {
     this.popUpCart.open(PopupCartComponent)
+  }
+
+  logout() { 
+    this.authSvc.logout();
+    this._snackBar.open('You are logged out!', 'Okie!', {duration: 3000})
+    this.router.navigate(["/"])
   }
 }

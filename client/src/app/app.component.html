@@ -8,14 +8,14 @@ integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1
         <button mat-icon-button (click)="sidenav.toggle()" >
             <mat-icon>menu</mat-icon>
         </button>
-        <a routerLink="/"> <h1>{{title}}</h1> </a>
+        <a routerLink="/"> <h1 style="margin: auto;">{{title}}</h1> </a>
         <span class="example-spacer"></span>
-        <!-- <button mat-icon-button matTooltip="login" (click)="login()" *ngIf="!isAuthenticated">
+        <button mat-icon-button matTooltip="login" routerLink="login" *ngIf="!isAuthenticated">
             <mat-icon>login</mat-icon>
         </button>
         <button mat-icon-button matTooltip="logout" *ngIf="isAuthenticated" (click)="logout()">
             <mat-icon>logout</mat-icon>
-        </button> -->
+        </button>
         <button mat-icon-button (click)="openPopUpCart()" matTooltip="cart">
             <mat-icon matBadge={{shoppingCart.length}} [matBadgeHidden]="isHidden" matBadgeColor="accent">shopping_cart</mat-icon>
         </button>
@@ -33,7 +33,9 @@ integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
+        <div style="height: 80vh;">
             <router-outlet></router-outlet>
+        </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
 

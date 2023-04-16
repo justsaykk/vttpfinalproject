@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseUISignInSuccessWithAuthResult, FirebaseUISignInFailure, FirebaseuiAngularLibraryService } from 'firebaseui-angular';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-login',
@@ -9,15 +10,20 @@ import { FirebaseUISignInSuccessWithAuthResult, FirebaseUISignInFailure, Firebas
 export class LoginComponent implements OnInit {
 
   constructor(
-    private firebaseuiAngularLibraryService: FirebaseuiAngularLibraryService
-  ) {
-    firebaseuiAngularLibraryService.firebaseUiInstance.disableAutoSignIn();
+    private firebaseuiAngularLibraryService: FirebaseuiAngularLibraryService,
+    private router: Router
+  ) { 
+    this.firebaseuiAngularLibraryService.firebaseUiInstance.disableAutoSignIn();
+  }
+
+
+  ngOnInit(): void {
    }
 
-
-  ngOnInit(): void { }
-
-  successCallback(signInSuccessData: FirebaseUISignInSuccessWithAuthResult){ }
+  successCallback(signInSuccessData: FirebaseUISignInSuccessWithAuthResult){
+    console.log(signInSuccessData)
+    this.router.navigate(["/"]);
+   }
     
   errorCallback(errorData: FirebaseUISignInFailure){ }
   

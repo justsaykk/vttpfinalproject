@@ -29,12 +29,12 @@ export class MenuComponent implements OnInit, OnDestroy {
   
 
   ngOnInit(): void {
-    this.httpSvc.loadMenu(this.queryIngredient);
     this.listOfDrinks$ = this.httpSvc.getListOfDrinks$().subscribe(
       (r) => { this.listOfDrinks = r })
     this.queryIngredient$ = this.httpSvc.getSearchIngredient$().subscribe(
       (r) => { this.queryIngredient = r })
-  }
+    this.httpSvc.loadMenu(this.queryIngredient);
+      }
 
   ngOnDestroy(): void {
       this.listOfDrinks$.unsubscribe();
@@ -44,9 +44,5 @@ export class MenuComponent implements OnInit, OnDestroy {
   addToCart(drink: Drink) {
     this.cartSvc.addToShoppingCart(drink)
     this._snackBar.open('Added to cart!', 'OK!', {duration: 3000})
-  }
-
-  learnMore(drink: Drink) {
-    // TODO: Implement Learn More button
   }
 }

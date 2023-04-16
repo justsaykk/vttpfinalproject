@@ -1,5 +1,15 @@
-
-<firebase-ui
-  (signInSuccessWithAuthResult)="successCallback($event)"
-  (signInFailure)="errorCallback($event)"
-  (uiShown)="uiShownCallback()"></firebase-ui>
+<div class="container" style="height: 80vh;">
+  <div class="row mt-3">
+    <div class="col-12 col-lg-4 offset-lg-4">
+      <mat-card style="margin: 50% auto 50% auto;">
+        <mat-card-header>
+          <mat-card-title>Login</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <firebase-ui (signInSuccessWithAuthResult)="successCallback($event)" (signInFailure)="errorCallback($event)"
+            (uiShown)="uiShownCallback()"></firebase-ui>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
