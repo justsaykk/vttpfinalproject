@@ -18,6 +18,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { FirebaseAuthModule } from './shared/firebase-auth/firebase-auth.module';
+import { LogoutMockComponent } from './shared/logout-mock/logout-mock.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { FirebaseAuthModule } from './shared/firebase-auth/firebase-auth.module'
     SearchComponent,
     LoginComponent,
     ProfileComponent,
+    LogoutMockComponent,
   ],
   imports: [
     BrowserModule,

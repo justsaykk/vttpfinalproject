@@ -7,6 +7,7 @@ import { RegistrationComponent } from './pages/registration/registration.compone
 import { SuccessComponent } from './pages/success/success.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { LogoutMockComponent } from './shared/logout-mock/logout-mock.component';
 
 const routes:Routes = [
   {path: "", component: HomeComponent},
@@ -17,6 +18,7 @@ const routes:Routes = [
   {path: "profile/:email",component: ProfileComponent},
   {path: "login", component: LoginComponent},
   {path: "payment/cancel", redirectTo:"menu", pathMatch: "full"},
+  {path: "logout", component: LogoutMockComponent},
   {path: "**", redirectTo: "/", pathMatch: "full"}
 ]
 
