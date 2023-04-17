@@ -36,7 +36,7 @@ import com.vttpfinalproject.backend.services.TransactionRepoService;
 import jakarta.json.Json;
 import jakarta.json.JsonArrayBuilder;
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200", "https://vttpfinalproject.vercel.com"})
+@CrossOrigin(origins = {"http://localhost:4200", "https://vttpfinalproject.vercel.app"})
 @RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RESTController {
 
