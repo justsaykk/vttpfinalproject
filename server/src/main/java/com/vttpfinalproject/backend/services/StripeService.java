@@ -34,6 +34,7 @@ public class StripeService {
     private TransactionRepoService tRepoService;
 
     public Session createSession(CartItem[] cart) throws StripeException {
+        System.out.printf("Stripe Secret Key >> %s\n", stripeSecretKey);
         Stripe.apiKey = stripeSecretKey;
         List<SessionCreateParams.LineItem> listOfLineItems = this.createLineItems(cart);
         SessionCreateParams.PhoneNumberCollection phoneNumberCollect = SessionCreateParams.PhoneNumberCollection.builder().setEnabled(true).build();
