@@ -5,6 +5,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,9 +45,10 @@ public class RESTController {
     private DrinkService drinkSvc;
     @Autowired
     private StripeService stripeSvc;
-
     @Autowired
     private TransactionRepoService tRxSvc;
+    @Value("${spring.stripe.endpointsecret}")
+    private String stripeSecret;
     
     @GetMapping(path = "/menu")
     public ResponseEntity<String> getMenu(
@@ -83,9 +85,6 @@ public class RESTController {
         @RequestHeader(name = "Stripe-Signature") String stripeSignature
     ) throws StripeException {
         Event event = null;
-        // This is your Stripe CLI webhook secret for testing your endpoint locally.
-        // To make this a @Value once releasing to production
-        final String endpointSecret = "whsec_322f0ce16457c639b48d0c90f498be0570724e8eccb546d0bb38b2c5881043b8";
 
         try {
             // Checking if the Event JSON object conforms to the Event.class. If it doesn't => something wrong
@@ -94,9 +93,9 @@ public class RESTController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        if(endpointSecret != null && stripeSignature != null) {
+        if(this.stripeSecret != null && stripeSignature != null) {
             try {
-                event = Webhook.constructEvent(payload, stripeSignature, endpointSecret);
+                event = Webhook.constructEvent(payload, stripeSignature, this.stripeSecret);
             } catch (SignatureVerificationException e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
