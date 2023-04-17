@@ -8,7 +8,8 @@ import { ShoppingcartService } from './shoppingcart.service';
   providedIn: 'root'
 })
 export class HttpService {
-  BASE_URL: string = "http://localhost:8080/api"
+  // BASE_URL: string = "http://localhost:8080/api"
+  BASE_URL: string = "https://drinkfactorybackend-production.up.railway.app/"
   constructor(private http:HttpClient, private cart: ShoppingcartService) { }
 
   // Section of Behavior Subjects
