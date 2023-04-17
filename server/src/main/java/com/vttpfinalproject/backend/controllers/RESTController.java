@@ -1,6 +1,7 @@
 package com.vttpfinalproject.backend.controllers;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.JsonSyntaxException;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.exception.StripeException;
@@ -32,9 +35,8 @@ import com.vttpfinalproject.backend.services.TransactionRepoService;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArrayBuilder;
-
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200", "https://vttpfinalproject-q1gz09fev-justsaykk.vercel.app"})
 @RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RESTController {
 
@@ -111,5 +113,19 @@ public class RESTController {
         return new ResponseEntity<String>(
             Json.createObjectBuilder().add("data", ja).build().toString(), 
             HttpStatus.OK);
+    }
+
+    @PostMapping("/verify-id-token")
+    public ResponseEntity<String> myEndpoint(@RequestHeader("Authorization") String token) throws ExecutionException, InterruptedException {
+        // Verify Firebase ID token
+        try {
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token.replace("Bearer ", ""));
+            String uid = decodedToken.getUid();
+            System.out.println(uid);
+            return new ResponseEntity<String>("Authenticated", HttpStatus.OK);
+        } catch (Exception e) {
+            // Firebase ID token is invalid
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 }

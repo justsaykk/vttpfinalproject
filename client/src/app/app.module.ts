@@ -19,6 +19,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { FirebaseAuthModule } from './shared/firebase-auth/firebase-auth.module';
 import { LogoutMockComponent } from './shared/logout-mock/logout-mock.component';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { LogoutMockComponent } from './shared/logout-mock/logout-mock.component'
     HttpClientModule,
     ReactiveFormsModule,
     NgxPaginationModule,
-    FirebaseAuthModule
+    FirebaseAuthModule,
+    provideAuth(() => getAuth()),
   ],
   providers: [
   ],

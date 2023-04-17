@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
-import { BehaviorSubject, Observable, catchError, from, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, catchError, from, throwError } from 'rxjs';
+import { HttpService } from './http.service';
 
 type SignIn = {
   email: string;
@@ -17,16 +18,17 @@ type FirebaseError = {
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private afAuth: AngularFireAuth) { }
-
   private _isAuthenticated = new BehaviorSubject<boolean>(false);
 
-  public getIsAuthenticated() :Observable<boolean>{
+  constructor(private afAuth: AngularFireAuth, private httpSvc: HttpService) { 
     this.afAuth.authState.subscribe(
       (user) => { this._isAuthenticated.next(!!user)});
-    return this._isAuthenticated
   }
 
+  // Getters
+  public getIsAuthenticated() :Observable<boolean>{ return this._isAuthenticated.asObservable() }
+  
+  public logout() { this.afAuth.signOut() }
   public login(params: SignIn): Observable<any> {
     return from(this.afAuth.signInWithEmailAndPassword(params.email, params.password))
     .pipe(
@@ -41,9 +43,16 @@ export class AuthService {
       ));
   }
 
-  public logout() {
-    this.afAuth.signOut();
+  public async getIdToken(): Promise<string | null> {
+    const user = await this.afAuth.currentUser;
+    if (user) {
+      const token = await user.getIdToken();
+      return token;
+    } else {
+      return null;
+    }
   }
+
 
   private translateFirebaseErrorMessage({code, message}: FirebaseError) {
     switch (code) {

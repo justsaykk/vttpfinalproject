@@ -5,6 +5,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from 'src/environments/environment';
 
+
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
   signInOptions: [
@@ -23,6 +24,6 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     AngularFireAuthModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig),
   ],
-  exports: [ AngularFireModule, AngularFireAuthModule, FirebaseUIModule ]
+  exports: [ AngularFireModule, AngularFireAuthModule, FirebaseUIModule]
 })
 export class FirebaseAuthModule { }
