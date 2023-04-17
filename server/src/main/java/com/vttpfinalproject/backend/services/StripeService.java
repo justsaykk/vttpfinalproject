@@ -34,7 +34,6 @@ public class StripeService {
     private TransactionRepoService tRepoService;
 
     public Session createSession(CartItem[] cart) throws StripeException {
-        System.out.printf("Stripe Secret Key >> %s\n", stripeSecretKey);
         Stripe.apiKey = stripeSecretKey;
         List<SessionCreateParams.LineItem> listOfLineItems = this.createLineItems(cart);
         SessionCreateParams.PhoneNumberCollection phoneNumberCollect = SessionCreateParams.PhoneNumberCollection.builder().setEnabled(true).build();
@@ -50,6 +49,7 @@ public class StripeService {
     }
 
     public void stripeEventHandler(Event event) throws StripeException {
+        Stripe.apiKey = stripeSecretKey;
         EventDataObjectDeserializer edod = event.getDataObjectDeserializer();
         if ("checkout.session.completed".equals(event.getType())) {
             Session sesh = (Session)edod.getObject().get();
