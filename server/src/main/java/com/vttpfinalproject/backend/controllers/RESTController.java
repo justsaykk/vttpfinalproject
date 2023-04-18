@@ -1,7 +1,6 @@
 package com.vttpfinalproject.backend.controllers;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -104,27 +102,19 @@ public class RESTController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(path = "/profile/{email}")
+    // Protected Routes
+    @GetMapping(path = "/profile", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getTransactionsByEmail(
-        @PathVariable(name = "email") String email
+        @RequestHeader("Authorization") String tokenString
     ) {
-        JsonArrayBuilder ja = tRxSvc.getTransactionsByEmail(email);
-        return new ResponseEntity<String>(
-            Json.createObjectBuilder().add("data", ja).build().toString(), 
-            HttpStatus.OK);
-    }
-
-    @PostMapping("/verify-id-token")
-    public ResponseEntity<String> myEndpoint(@RequestHeader("Authorization") String token) throws ExecutionException, InterruptedException {
-        // Verify Firebase ID token
         try {
-            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token.replace("Bearer ", ""));
-            String uid = decodedToken.getUid();
-            System.out.println(uid);
-            return new ResponseEntity<String>("Authenticated", HttpStatus.OK);
+            FirebaseToken authToken = FirebaseAuth.getInstance().verifyIdToken(tokenString.replace("Bearer ", ""));
+            JsonArrayBuilder ja = tRxSvc.getTransactionsByEmail(authToken.getEmail());
+            return new ResponseEntity<String>(
+                Json.createObjectBuilder().add("data", ja).build().toString(), 
+                HttpStatus.OK);
         } catch (Exception e) {
-            // Firebase ID token is invalid
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return new ResponseEntity<String>("Invalid token", HttpStatus.FORBIDDEN);
         }
     }
 }

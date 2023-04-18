@@ -42,18 +42,7 @@ export class AuthService {
         throwError(() => new Error(this.translateFirebaseErrorMessage(error)))
       ));
   }
-
-  public async getIdToken(): Promise<string | null> {
-    const user = await this.afAuth.currentUser;
-    if (user) {
-      const token = await user.getIdToken();
-      return token;
-    } else {
-      return null;
-    }
-  }
-
-
+  
   private translateFirebaseErrorMessage({code, message}: FirebaseError) {
     switch (code) {
       case "auth/user-not-found":
