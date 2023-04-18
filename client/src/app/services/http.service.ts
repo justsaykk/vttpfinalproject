@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, firstValueFrom, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, map, Observable, switchMap } from 'rxjs';
 import { CartItem, Drink, TransactionDetail } from '../models/models';
 import { ShoppingcartService } from './shoppingcart.service';
-import { AuthService } from './auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class HttpService {
   constructor(
     private http:HttpClient, 
     private cart: ShoppingcartService,
-    private afAuth: AngularFireAuth,
+    private authSvc: AuthService,
     ) { }
 
   // Section of Behavior Subjects
@@ -59,21 +59,16 @@ export class HttpService {
       .then((res) => window.location.href = res.redirectUrl)
   }
 
-  public getTransactionsByEmail() {
-    let url: string = `${this.BASE_URL}/profile`
-    let token: string | null = null;
-    let token$ = this.afAuth.idToken.subscribe((t) => token = t)
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      })
-    };
-    token$.unsubscribe();
-    this.http.get<{data: TransactionDetail[]}>(url, httpOptions).subscribe(
+  public async getTransactionsByEmail() {
+    let url: string = `${this.BASE_URL}/profile`;
+    let idToken = "";
+    let idToken$ = this.authSvc.getIdToken().subscribe((idT) => idToken = idT)
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${idToken}`);
+    return this.http.get<{data: TransactionDetail[]}>(url, {headers}).subscribe(
       (r) => {
         this._transactionsByEmail.next(r.data)
+        idToken$.unsubscribe();
       }
     )
   }
- }
+}

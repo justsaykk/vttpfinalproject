@@ -19,15 +19,31 @@ type FirebaseError = {
 })
 export class AuthService {
   private _isAuthenticated = new BehaviorSubject<boolean>(false);
+  private _idToken = new BehaviorSubject<string>("");
 
-  constructor(private afAuth: AngularFireAuth, private httpSvc: HttpService) { 
-    this.afAuth.authState.subscribe(
-      (user) => { this._isAuthenticated.next(!!user)});
+  constructor(private afAuth: AngularFireAuth) { 
+    this.setAuthState();
   }
 
   // Getters
-  public getIsAuthenticated() :Observable<boolean>{ return this._isAuthenticated.asObservable() }
-  
+  public getIsAuthenticated() :Observable<boolean>{ return this._isAuthenticated };
+  public getIdToken(): Observable<string> {return this._idToken};
+
+  // Setters
+  private setAuthState(): void {
+    this.afAuth.authState.subscribe(
+      (user) => { 
+        this._isAuthenticated.next(!!user)
+        if (!!user) { this.setIdToken() }
+      });
+  }
+  private setIdToken():void {
+    this.afAuth.idToken.subscribe(
+      (token) => {this._idToken.next(token!)}
+    )
+  }
+
+  // Functions
   public logout() { this.afAuth.signOut() }
   public login(params: SignIn): Observable<any> {
     return from(this.afAuth.signInWithEmailAndPassword(params.email, params.password))
@@ -60,4 +76,5 @@ export class AuthService {
    
     return message;
   }
+
 }
