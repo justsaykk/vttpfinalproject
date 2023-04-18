@@ -115,6 +115,7 @@ public class RESTController {
                 Json.createObjectBuilder().add("data", ja).build().toString(), 
                 HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println(e);
             return new ResponseEntity<String>("Invalid token", HttpStatus.FORBIDDEN);
         }
     }
