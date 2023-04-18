@@ -1,6 +1,6 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
-import { BehaviorSubject, Observable, Subscription, catchError, from, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, from, throwError } from 'rxjs';
 import { HttpService } from './http.service';
 
 type SignIn = {
@@ -42,7 +42,7 @@ export class AuthService {
         throwError(() => new Error(this.translateFirebaseErrorMessage(error)))
       ));
   }
-  
+
   private translateFirebaseErrorMessage({code, message}: FirebaseError) {
     switch (code) {
       case "auth/user-not-found":

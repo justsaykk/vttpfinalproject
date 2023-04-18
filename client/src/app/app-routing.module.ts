@@ -8,6 +8,7 @@ import { SuccessComponent } from './pages/success/success.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { LogoutMockComponent } from './shared/logout-mock/logout-mock.component';
+import { authGuard } from './services/auth.guard';
 
 const routes:Routes = [
   {path: "", component: HomeComponent},
@@ -15,7 +16,7 @@ const routes:Routes = [
   {path: "menu", component: MenuComponent},
   {path: "checkout", component: CheckoutComponent},
   {path: "payment/success", component: SuccessComponent},
-  {path: "profile/:email",component: ProfileComponent},
+  {path: "profile",component: ProfileComponent, canActivate: [authGuard]},
   {path: "login", component: LoginComponent},
   {path: "payment/cancel", redirectTo:"menu", pathMatch: "full"},
   {path: "logout", component: LogoutMockComponent},

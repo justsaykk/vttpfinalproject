@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy{
   routes = [
     {route: "/", name: "Home"},
     {route: "/menu", name: "Menu"},
-    {route: "/userprofile", name: "User Profile"},
+    {route: "/profile", name: "User Profile"},
     {route: "/contactus", name: "Contact Us"},
   ]
 

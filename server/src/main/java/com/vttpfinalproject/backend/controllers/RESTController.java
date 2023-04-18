@@ -108,7 +108,8 @@ public class RESTController {
         @RequestHeader("Authorization") String tokenString
     ) {
         try {
-            FirebaseToken authToken = FirebaseAuth.getInstance().verifyIdToken(tokenString.replace("Bearer ", ""));
+            FirebaseToken authToken = FirebaseAuth.getInstance()
+                .verifyIdToken(tokenString.replace("Bearer ", ""));
             JsonArrayBuilder ja = tRxSvc.getTransactionsByEmail(authToken.getEmail());
             return new ResponseEntity<String>(
                 Json.createObjectBuilder().add("data", ja).build().toString(), 

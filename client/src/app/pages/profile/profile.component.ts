@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscribable, Subscription } from 'rxjs';
 import { TransactionDetail } from 'src/app/models/models';
+import { AuthService } from 'src/app/services/auth.service';
 import { HttpService } from 'src/app/services/http.service';
 
 @Component({
@@ -15,11 +16,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   transactions!: TransactionDetail[]
   email!: string
 
-  constructor(private httpSvc: HttpService, private route:ActivatedRoute) { }
+  constructor(
+    private httpSvc: HttpService,
+    ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => this.email = params['email'])
-    this.httpSvc.getTransactionsByEmail(this.email);
+    this.httpSvc.getTransactionsByEmail();
     this.transactions$ = this.httpSvc.getTransactionsByEmail$().subscribe(
       (r) => {
         this.transactions = r;
