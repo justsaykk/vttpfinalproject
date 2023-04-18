@@ -63,7 +63,10 @@ export class HttpService {
     let url: string = `${this.BASE_URL}/profile`;
     let idToken = "";
     let idToken$ = this.authSvc.getIdToken().subscribe((idT) => idToken = idT)
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${idToken}`);
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${idToken}`)
+      .set('Content-Type', "application/json")
+
     return this.http.get<{data: TransactionDetail[]}>(url, {headers}).subscribe(
       (r) => {
         this._transactionsByEmail.next(r.data)
