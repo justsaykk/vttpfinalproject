@@ -61,14 +61,15 @@ export class HttpService {
 
   public getTransactionsByEmail() {
     let url: string = `${this.BASE_URL}/profile`
-    let token = localStorage.getItem('idToken');
+    let token: string | null = null;
+    let token$ = this.afAuth.idToken.subscribe((t) => token = t)
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
       })
     };
-    
+    token$.unsubscribe();
     this.http.get<{data: TransactionDetail[]}>(url, httpOptions).subscribe(
       (r) => {
         this._transactionsByEmail.next(r.data)
