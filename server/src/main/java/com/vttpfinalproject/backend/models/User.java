@@ -7,8 +7,9 @@ import com.google.firebase.auth.FirebaseToken;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
+@Data @NoArgsConstructor
 public class User {
     private String name;
     private String email;

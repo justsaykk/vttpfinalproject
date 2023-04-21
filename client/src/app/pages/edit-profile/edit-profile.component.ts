@@ -22,7 +22,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     private location: Location,
     private storageSvc: StorageService,
     private httpSvc: HttpService,
-  ) {}
+  ) { }
 
   form!: FormGroup;
   isAuthenticated$!: Subscription;
@@ -40,22 +40,22 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate(['/'])
     }
-   }
+  }
 
-   ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.isAuthenticated$.unsubscribe();
   }
 
-  goBack(): void {this.location.back()}
+  goBack(): void { this.location.back() }
 
   createForm(): FormGroup {
     return this.fb.group({
-      email: this.fb.control({ value: this.currentUser.email, disabled: true}),
+      email: this.fb.control({ value: this.currentUser.email, disabled: true }),
       name: this.fb.control(this.currentUser.name),
       image: this.fb.control('')
     })
   }
-  
+
   onFileSelected(event: any) {
     this.file = event.target.files[0];
     if (this.file) {
@@ -68,18 +68,22 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     const storage = getStorage();
     const storageRef: StorageReference = ref(storage, storageFileName);
     this.storageSvc.uploadFile(storageRef, this.file, this.currentUser)
-    .then(() => {
-      getDownloadURL(storageRef).then(
-        (url) => {
-          return {
-            name: this.form.value.name,
-            email: this.currentUser.email,
-            profilePic: url,
-            firebaseUID: this.currentUser.firebaseUID
-          } as User})
-          .then((editedUser) => this.httpSvc.editUser(editedUser))
+      .then(() => {
+        getDownloadURL(storageRef)
+          .then(
+            (url) => {
+              console.log(url);
+              return {
+                name: this.form.value.name,
+                email: this.currentUser.email,
+                profilePic: url,
+                firebaseUID: this.currentUser.firebaseUID
+              } as User
+            }
+          )
+          .then((editedUser) => { this.httpSvc.editUser(editedUser) })
           .catch((err) => console.log(err))
-      }
-    );
+      })
+      .then(() => this.router.navigate(['/profile']))
   }
 }

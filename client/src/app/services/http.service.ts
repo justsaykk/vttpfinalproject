@@ -34,7 +34,7 @@ export class HttpService {
   public getSearchIngredient$(): Observable<string> { return this._searchIngredient}
   public getTransactionsByEmail$(): Observable<TransactionDetail[]> {return this._transactionsByEmail}
   public getProfile(): Observable<User> {
-    this.getProfilefromDb;
+    this.getProfilefromDb();
     return this._profile
   }
   public setSearchIngredients(ingredient: string): void { this._searchIngredient.next(ingredient) }
@@ -113,7 +113,6 @@ export class HttpService {
     this.http.put(url, user, {headers}).subscribe(
       () => {
         idToken$.unsubscribe();
-        this.router.navigate(['/profile'])
       }
     )
   }
