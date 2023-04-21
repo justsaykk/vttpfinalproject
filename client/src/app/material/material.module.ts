@@ -42,9 +42,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 
-// Material External Library
-import { MatFileUploadModule } from 'angular-material-fileupload'
-
 @NgModule({
   declarations: [],
   imports: [
@@ -84,7 +81,6 @@ import { MatFileUploadModule } from 'angular-material-fileupload'
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    MatFileUploadModule
   ],
   exports: [
     MatAutocompleteModule,
@@ -122,7 +118,6 @@ import { MatFileUploadModule } from 'angular-material-fileupload'
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    MatFileUploadModule
   ]
 })
 export class MaterialModule { }
