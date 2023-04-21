@@ -16,16 +16,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
   currentUser$!: Subscription
   currentUser!: User
   panelOpenState = false;
+  isLoading = true;
 
   constructor(
     private httpSvc: HttpService,
     private router: Router
-    ) { }
+    ) {  }
 
   ngOnInit(): void {
+    this.httpSvc.getProfilefromDb()
     this.httpSvc.getTransactionsByEmail();
     this.transactions$ = this.httpSvc.getTransactionsByEmail$().subscribe((r) => {this.transactions = r})
-    this.currentUser$ = this.httpSvc.getProfile().subscribe(user => this.currentUser = user);   
+    this.currentUser$ = this.httpSvc.getProfile().subscribe(user => this.currentUser = user);
   }
 
   ngOnDestroy(): void {

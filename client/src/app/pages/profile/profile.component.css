@@ -1,6 +1,6 @@
 #profile-pic {
-    height: 60%;
-    width: 60%;
+    height: 75%;
+    width: 75%;
 }
 
 mat-card img {
@@ -33,4 +33,8 @@ height: 80px;
 width: 80px;
 margin-right: 16px;
 border-radius: 50%;
+}
+
+.shimmer-loading {
+
 }

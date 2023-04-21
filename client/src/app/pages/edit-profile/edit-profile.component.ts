@@ -30,7 +30,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   currentUser$!: Subscription;
   currentUser!: User
   file!: File;
-  fileName!: string;
+  fileName: string = "No file selected";
 
   ngOnInit(): void {
     this.isAuthenticated$ = this.authSvc.getIsAuthenticated().subscribe((b) => this.isAuthenticated = b)
@@ -84,6 +84,8 @@ export class EditProfileComponent implements OnInit, OnDestroy {
           .then((editedUser) => { this.httpSvc.editUser(editedUser) })
           .catch((err) => console.log(err))
       })
-      .then(() => this.router.navigate(['/profile']))
+      .then(() => {this.router.navigate(['/'])
+                    .then(() => window.location.reload())
+                  })
   }
 }

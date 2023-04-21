@@ -22,6 +22,8 @@ import { LogoutMockComponent } from './shared/logout-mock/logout-mock.component'
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { getStorage, provideStorage } from '@angular/fire/storage';
+// External UI Modules
+import { NgxShimmerLoadingModule } from  'ngx-shimmer-loading';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
     ReactiveFormsModule,
     NgxPaginationModule,
     FirebaseAuthModule,
+    NgxShimmerLoadingModule,
     provideAuth(() => getAuth()),
     provideStorage(() => getStorage())
   ],

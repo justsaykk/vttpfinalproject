@@ -19,14 +19,19 @@
                 <input matInput type="email" formControlName="name">
               </mat-form-field>
 
-              <input type="file" class="file-input" accept="image/jpeg" (change)="onFileSelected($event)" #fileUpload>
+              <mat-form-field appearance="outline">
+                  <mat-label>Change Profile Picture</mat-label>
+                  <mat-toolbar>
+                    <input matInput [value]="fileName" style="font-size: 16px; font-weight: normal;">
+                  </mat-toolbar>
+                  <input type="file" class="file-input" accept="image/jpeg" (change)="onFileSelected($event)" id="fileInput">
+                  <mat-icon matSuffix>upload</mat-icon>
+              </mat-form-field>
 
               <mat-card-actions style="justify-content: space-between;">
                 <button mat-raised-button type="submit" color="primary" style="width: 40%;">Submit</button>
                 <button mat-raised-button style="width: 40%;" (click)="goBack()" type="button">Back</button>
               </mat-card-actions>
-              <p style="text-align: center; margin-top: 20px;">New around here? <a routerLink="/registration">Sign up
-                  with us</a></p>
             </form>
           </div>
         </mat-card-content>

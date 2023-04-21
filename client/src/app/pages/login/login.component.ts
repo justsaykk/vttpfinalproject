@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isAuthenticated$ = this.authSvc.getIsAuthenticated().subscribe((b) => this.isAuthenticated = b)
-    console.log(this.isAuthenticated)
+    console.log("Authentication status >> " + this.isAuthenticated)
     if (!this.isAuthenticated) {
       this.createForm()
     } else {
