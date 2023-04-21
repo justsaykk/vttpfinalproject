@@ -20,7 +20,7 @@ public class UserTable {
     }
 
     public SqlRowSet getUserByUID(String firebaseUID) {
-        return repo.queryForRowSet(SQL_GET_TRANSACTION_BY_ID, firebaseUID);
+        return repo.queryForRowSet(SQL_GET_USERS_BY_UID, firebaseUID);
     }
 
     public int createUser(User user) {
