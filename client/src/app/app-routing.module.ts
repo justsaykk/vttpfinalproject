@@ -9,6 +9,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { LogoutMockComponent } from './shared/logout-mock/logout-mock.component';
 import { authGuard } from './services/auth.guard';
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 
 const routes:Routes = [
   {path: "", component: HomeComponent},
@@ -17,6 +18,7 @@ const routes:Routes = [
   {path: "checkout", component: CheckoutComponent},
   {path: "payment/success", component: SuccessComponent},
   {path: "profile",component: ProfileComponent, canActivate: [authGuard]},
+  {path: "edit-profile",component: EditProfileComponent, canActivate: [authGuard]},
   {path: "login", component: LoginComponent},
   {path: "payment/cancel", redirectTo:"menu", pathMatch: "full"},
   {path: "logout", component: LogoutMockComponent},

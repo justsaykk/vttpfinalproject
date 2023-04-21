@@ -20,7 +20,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { FirebaseAuthModule } from './shared/firebase-auth/firebase-auth.module';
 import { LogoutMockComponent } from './shared/logout-mock/logout-mock.component';
 import { getAuth, provideAuth } from '@angular/fire/auth';
-
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
     LoginComponent,
     ProfileComponent,
     LogoutMockComponent,
+    EditProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +48,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
     NgxPaginationModule,
     FirebaseAuthModule,
     provideAuth(() => getAuth()),
+    provideStorage(() => getStorage())
   ],
   providers: [
   ],

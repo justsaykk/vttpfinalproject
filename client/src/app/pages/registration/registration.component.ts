@@ -44,11 +44,13 @@ export class RegistrationComponent implements OnInit, OnDestroy {
    }
 
    createUser() {
-    this.authSvc.createUser({
+    this.authSvc.createFirebaseUser({
       email: this.form.value.email,
       password: this.form.value.password
     }).subscribe({
-      next: () => this.router.navigate(['/']),
+      next: () => {
+        this.router.navigate(['/'])
+      },
       error: error => {
         this._snackBar.open(error.message, "OK", {
           duration: 3000

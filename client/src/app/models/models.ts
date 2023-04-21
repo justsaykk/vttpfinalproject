@@ -22,3 +22,10 @@ export interface TransactionDetail {
     customer_phone: string
     cart_items: CartItem[]
 }
+
+export interface User {
+    name: string
+    email: string
+    profilePic: string
+    firebaseUID: string
+}

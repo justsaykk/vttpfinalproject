@@ -32,7 +32,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isAuthenticated$ = this.authSvc.getIsAuthenticated().subscribe((b) => this.isAuthenticated = b)
-    if (!this.isAuthenticated) {this.createForm()} else {this.router.navigate(["/"])}
+    console.log(this.isAuthenticated)
+    if (!this.isAuthenticated) {
+      this.createForm()
+    } else {
+      console.log("User is logged in")
+      this.router.navigate(['/'])
+    }
    }
 
   ngOnDestroy(): void {
@@ -44,7 +50,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       email: this.form.value.email,
       password: this.form.value.password
     }).subscribe({
-      next: () => this.router.navigate(['/']),
+      next: () => {
+        this.authSvc.setAuthState();
+        this.router.navigate(['/']);
+      },
       error: error => {
         this._snackBar.open(error.message, "OK", {
           duration: 3000

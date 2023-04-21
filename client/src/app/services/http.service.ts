@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, map, Observable, switchMap } from 'rxjs';
-import { CartItem, Drink, TransactionDetail } from '../models/models';
+import { CartItem, Drink, TransactionDetail, User } from '../models/models';
 import { ShoppingcartService } from './shoppingcart.service';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,17 +16,27 @@ export class HttpService {
     private http:HttpClient, 
     private cart: ShoppingcartService,
     private authSvc: AuthService,
+    private router: Router,
     ) { }
 
   // Section of Behavior Subjects
   private _listOfDrinks = new BehaviorSubject<Drink[]>([]);
   private _searchIngredient = new BehaviorSubject<string>("rum");
   private _transactionsByEmail = new BehaviorSubject<TransactionDetail[]>([]);
+  private _profile = new BehaviorSubject<User>({    
+    email: "",
+    name: "",
+    profilePic: "",
+    firebaseUID: ""})
 
   // Getters
   public getListOfDrinks$(): Observable<Drink[]> { return this._listOfDrinks }
   public getSearchIngredient$(): Observable<string> { return this._searchIngredient}
   public getTransactionsByEmail$(): Observable<TransactionDetail[]> {return this._transactionsByEmail}
+  public getProfile(): Observable<User> {
+    this.getProfilefromDb;
+    return this._profile
+  }
   public setSearchIngredients(ingredient: string): void { this._searchIngredient.next(ingredient) }
 
   // When /menu is hit, ngOnInit will call this method to load the menu items
@@ -60,7 +70,7 @@ export class HttpService {
   }
 
   public async getTransactionsByEmail() {
-    let url: string = `${this.BASE_URL}/profile`;
+    let url: string = `${this.BASE_URL}/profile/transactions`;
     let idToken = "";
     let idToken$ = this.authSvc.getIdToken().subscribe((idT) => idToken = idT)
     const headers = new HttpHeaders()
@@ -71,6 +81,39 @@ export class HttpService {
       (r) => {
         this._transactionsByEmail.next(r.data)
         idToken$.unsubscribe();
+      }
+    )
+  }
+
+  public getProfilefromDb() {
+    let url: string = `${this.BASE_URL}/profile`;
+    let idToken = "";
+    let idToken$ = this.authSvc.getIdToken().subscribe((idT) => idToken = idT)
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${idToken}`)
+      .set('Content-Type', "application/json")
+    
+      return this.http.get<User>(url, {headers}).subscribe((r) => {
+        this._profile.next(r);
+        idToken$.unsubscribe();
+      })
+  }
+
+  public editUser(user: User): void {
+    let url: string = `${this.BASE_URL}/profile`;
+    let idToken = "";
+    let idToken$ = this.authSvc.getIdToken().subscribe((idT) => idToken = idT)
+
+    let headers = new HttpHeaders()
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      .set('Authorization', `Bearer ${idToken}`)
+      .set('Content-Type', "application/json")
+    
+    this.http.put(url, user, {headers}).subscribe(
+      () => {
+        idToken$.unsubscribe();
+        this.router.navigate(['/profile'])
       }
     )
   }

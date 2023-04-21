@@ -1,0 +1,36 @@
+#profile-pic {
+    height: 60%;
+    width: 60%;
+}
+
+mat-card img {
+    display: block;
+    margin: 0 auto;
+  }
+
+.mat-mdc-form-field + .mat-mdc-form-field {
+margin-left: 8px;
+}
+
+.example-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px;
+}
+
+.example-card .damages{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    margin: 10px;
+}
+  
+.example-header-image {
+background-size: cover;
+height: 80px;
+width: 80px;
+margin-right: 16px;
+border-radius: 50%;
+}

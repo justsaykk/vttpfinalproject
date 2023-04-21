@@ -1,3 +1,68 @@
-<p>{{transactions[0].customer_email}}</p>
-<p>{{transactions[0].customer_phone}}</p>
-<p>{{transactions[0].cart_items[0].drink.strDrink}}</p>
+<mat-grid-list cols="4" rowHeight="100vh">
+    <!-- Left-Hand-Side Card (Profile Card) -->
+    <mat-grid-tile colspan="1">
+        <div style="height: 100%; width: 100%; display: flex; align-items: start; margin-top: 20px;">
+            <mat-card class="mat-elevation-z4" style="margin-left: 50px;">
+                <div style="margin: 5%">
+                    <mat-card-header>
+                        <img mat-card-image src="assets/stock-profile-photo.jpeg" id="profile-pic">
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p class="card-text">Name: {{currentUser.name}}</p>
+                        <p class="card-text">E-mail: {{currentUser.email}}</p>
+                    </mat-card-content>
+                    <mat-card-actions style="justify-content: right;">
+                        <button mat-raised-button color="accent" (click)="goToEditProfilePage()">Edit Profile</button>
+                    </mat-card-actions>
+                </div>
+            </mat-card>
+        </div>
+    </mat-grid-tile>
+
+    <!-- Right-Hand-Side (Transactions) -->
+    <mat-grid-tile colspan="3">
+        <div style="min-height: 100vh; width: 100%; display: flex; align-items: start; margin-top: 20px; margin-left: 50px; justify-content: center;">
+            <div *ngIf="!transactions.length" style="display: flex; flex-direction: column">
+                <div class="nothing-here-image">
+                    <img src="assets/nothing-here.jpeg">
+                </div>
+                <div style="justify-content: center; display: flex; margin: 50px;">
+                    <button mat-raised-button color="primary" type="button" routerLink="/menu">Go To Menu</button>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; width: 80%;">
+                <mat-accordion style="width: 100%" multi="false">
+                    <div *ngFor="let transaction of transactions; let i=index" style="margin-bottom: 10px;">
+                        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Transaction {{i}}
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    {{panelOpenState ? 'Summary of Transaction' : ''}}
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <div *ngFor="let cartItem of transaction.cart_items">
+                                <mat-card class="example-card">
+                                    <mat-card-header>
+                                        <div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image': 'url(' + cartItem.drink.strDrinkThumb + ')'}"></div>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                        <h2 style="white-space: nowrap;">{{cartItem.drink.strDrink}}</h2>
+                                        <mat-card-subtitle>Quantity: {{cartItem.quantity}}</mat-card-subtitle>
+                                    </mat-card-content>
+                                    <div class="damages">
+                                        <mat-card-content>
+                                            <h3>Price: {{cartItem.drink.price / 100 | currency: "SGD"}}</h3>
+                                            <mat-card-subtitle>Total: {{cartItem.drink.price * cartItem.quantity / 100| currency: "SGD"}}</mat-card-subtitle>
+                                        </mat-card-content>
+                                    </div>
+                                </mat-card>
+                            </div>
+                        </mat-expansion-panel>
+                    </div>
+                </mat-accordion>
+            </div>
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>

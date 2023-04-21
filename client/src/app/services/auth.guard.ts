@@ -5,7 +5,11 @@ import { Router } from "@angular/router";
 export const authGuard = () => {
     const authSvc = inject(AuthService)
     const router = inject(Router)
-    let isAuthenticated!: boolean
+    let isAuthenticated!: boolean;
     authSvc.getIsAuthenticated().subscribe((b) => isAuthenticated = b).unsubscribe();
-    return (isAuthenticated) ? isAuthenticated : router.parseUrl('/login');
+    if (!isAuthenticated) {
+      router.navigate(['/login']);
+      return false;
+    }
+    return isAuthenticated
   };

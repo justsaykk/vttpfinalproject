@@ -1,0 +1,36 @@
+<div class="container" style="height: 80vh;">
+  <div class="row mt-3">
+    <div class="col-12 col-lg-4 offset-lg-4">
+      <mat-card style="margin: 20% auto auto auto;">
+        <mat-card-header>
+          <mat-card-title style="margin: 0 0 20px 0;">Edit Profile</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div style="display: flex; justify-content: center;">
+            <form style="width: fit-content;" [formGroup]="form" (ngSubmit)="editProfile()">
+
+              <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Name</mat-label>
+                <input matInput type="email" formControlName="name">
+              </mat-form-field>
+
+              <input type="file" class="file-input" accept="image/jpeg" (change)="onFileSelected($event)" #fileUpload>
+
+              <mat-card-actions style="justify-content: space-between;">
+                <button mat-raised-button type="submit" color="primary" style="width: 40%;">Submit</button>
+                <button mat-raised-button style="width: 40%;" (click)="goBack()" type="button">Back</button>
+              </mat-card-actions>
+              <p style="text-align: center; margin-top: 20px;">New around here? <a routerLink="/registration">Sign up
+                  with us</a></p>
+            </form>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

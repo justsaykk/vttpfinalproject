@@ -70,6 +70,7 @@ public class StripeService {
             cartItem.getDrink().getStrDrink(), itemPrice, quantity);
             
             String affix = UUID.randomUUID().toString().substring(0, 8);
+            
             ProductCreateParams productParams = ProductCreateParams.builder()
                 .setName(cartItem.getDrink().getStrDrink())
                 .setId("%s_%s".formatted(cartItem.getDrink().getIdDrink(), affix))

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { PopupCartComponent } from './components/popup-cart/popup-cart.component';
-import { Drink } from './models/models';
+import { Drink, User } from './models/models';
 import { ShoppingcartService } from './services/shoppingcart.service';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
@@ -28,13 +28,9 @@ export class AppComponent implements OnInit, OnDestroy{
   shoppingCart!: Drink[]
   isAuthenticated$!: Subscription;
   isAuthenticated!: boolean;
+  currentUser$!: Subscription;
+  currentUser!: User;
   isHidden = true
-  routes = [
-    {route: "/", name: "Home"},
-    {route: "/menu", name: "Menu"},
-    {route: "/profile", name: "User Profile"},
-    {route: "/contactus", name: "Contact Us"},
-  ]
 
   ngOnInit(): void {
       this.shoppingCart$ = this.cartSvc.getShoppingCartItems().subscribe(
@@ -42,13 +38,14 @@ export class AppComponent implements OnInit, OnDestroy{
           this.shoppingCart = cart;
           this.toggleBadgeVisibility();
         })
-      this.isAuthenticated$ = this.authSvc.getIsAuthenticated().subscribe(
-        (b) => { this.isAuthenticated = b })
+      this.isAuthenticated$ = this.authSvc.getIsAuthenticated().subscribe((b) => { this.isAuthenticated = b })
+      this.currentUser$ = this.authSvc.getCurrentUser().subscribe(user => this.currentUser = user)
   }
 
   ngOnDestroy(): void {
       this.shoppingCart$.unsubscribe();
       this.isAuthenticated$.unsubscribe();
+      this.currentUser$.unsubscribe();
   }
 
   toggleBadgeVisibility() {
