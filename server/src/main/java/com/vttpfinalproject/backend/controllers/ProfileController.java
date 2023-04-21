@@ -63,7 +63,6 @@ public class ProfileController {
         }
 
         FirebaseToken fbToken = optFbToken.get();
-        System.out.println(fbToken.getUid());
         Optional<User> dbUserOptional = userSvc.getUserByUID(fbToken.getUid());
         if (dbUserOptional.isEmpty()) {
             System.out.println("No Such Firebase user. Creating New user");

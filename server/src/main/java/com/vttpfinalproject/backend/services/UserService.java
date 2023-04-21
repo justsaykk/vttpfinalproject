@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public Optional<User> getUserByUID(String uid) {
-        SqlRowSet rs = userTable.getUserByEmail(uid);
+        SqlRowSet rs = userTable.getUserByUID(uid);
         if (!rs.first())
             return Optional.empty();
         return Optional.of(new User(rs));
