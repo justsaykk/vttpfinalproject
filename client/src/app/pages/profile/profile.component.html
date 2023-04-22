@@ -6,12 +6,14 @@
             <mat-card class="mat-elevation-z4" style="margin-left: 50px;">
                 <div style="margin: 5%">
                     <mat-card-header style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
-                        <img mat-card-image src="{{currentUser.profilePic}}" (load)="isLoading = false" id="profile-pic">
+                        <img mat-card-image src="{{profilePicUrl}}" (load)="isLoading = false" id="profile-pic">
                         <ngx-shimmer-loading class="shimmer-loading" [width]="'200px'" [height]="'200px'" [borderRadius]="'5px'" *ngIf="isLoading"></ngx-shimmer-loading>
                     </mat-card-header>
                     <mat-card-content>
-                        <p class="card-text">Name: {{currentUser.name}}</p>
-                        <p class="card-text">E-mail: {{currentUser.email}}</p>
+                            <ngx-shimmer-loading class="shimmer-loading" [width]="'90%'" [height]="'25px'" [borderRadius]="'5px'" *ngIf="isLoading"></ngx-shimmer-loading>
+                            <ngx-shimmer-loading class="shimmer-loading" [width]="'70%'" [height]="'25px'" [borderRadius]="'5px'" *ngIf="isLoading"></ngx-shimmer-loading>
+                            <p class="card-text" *ngIf="!isLoading">Name: {{currentUser.name}}</p>
+                            <p class="card-text" *ngIf="!isLoading">E-mail: {{currentUser.email}}</p>
                     </mat-card-content>
                     <mat-card-actions style="justify-content: right;">
                         <button mat-raised-button color="accent" (click)="goToEditProfilePage()">Edit Profile</button>

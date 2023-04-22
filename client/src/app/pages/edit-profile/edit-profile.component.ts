@@ -2,8 +2,8 @@ import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { StorageReference, getDownloadURL, getStorage, ref } from 'firebase/storage';
-import { Subscription } from 'rxjs';
+import { StorageReference, UploadResult, getDownloadURL, getStorage, ref } from 'firebase/storage';
+import { Subscription, firstValueFrom, lastValueFrom } from 'rxjs';
 import { User } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { HttpService } from 'src/app/services/http.service';
@@ -17,7 +17,6 @@ import { StorageService } from 'src/app/services/storage.service';
 export class EditProfileComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
-    private authSvc: AuthService,
     private router: Router,
     private location: Location,
     private storageSvc: StorageService,
@@ -25,26 +24,19 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   form!: FormGroup;
-  isAuthenticated$!: Subscription;
-  isAuthenticated!: boolean;
-  currentUser$!: Subscription;
+  currentUser$!: Subscription
   currentUser!: User
   file!: File;
   fileName: string = "No file selected";
 
-  ngOnInit(): void {
-    this.isAuthenticated$ = this.authSvc.getIsAuthenticated().subscribe((b) => this.isAuthenticated = b)
-    this.currentUser$ = this.authSvc.getCurrentUser().subscribe((user) => this.currentUser = user)
-    if (this.isAuthenticated) {
-      this.form = this.createForm()
-    } else {
-      this.router.navigate(['/'])
-    }
+  ngOnInit(){
+    this.currentUser$ = this.httpSvc.getProfile().subscribe((user: User) => {this.currentUser = user})
+    this.form = this.createForm()
   }
 
   ngOnDestroy(): void {
-    this.isAuthenticated$.unsubscribe();
-  }
+    this.currentUser$.unsubscribe()
+   }
 
   goBack(): void { this.location.back() }
 
@@ -64,28 +56,20 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   }
 
   editProfile() {
-    let storageFileName = this.currentUser.firebaseUID
-    const storage = getStorage();
-    const storageRef: StorageReference = ref(storage, storageFileName);
-    this.storageSvc.uploadFile(storageRef, this.file, this.currentUser)
-      .then(() => {
-        getDownloadURL(storageRef)
-          .then(
-            (url) => {
-              console.log(url);
-              return {
-                name: this.form.value.name,
-                email: this.currentUser.email,
-                profilePic: url,
-                firebaseUID: this.currentUser.firebaseUID
-              } as User
-            }
-          )
-          .then((editedUser) => { this.httpSvc.editUser(editedUser) })
-          .catch((err) => console.log(err))
-      })
-      .then(() => {this.router.navigate(['/'])
-                    .then(() => window.location.reload())
-                  })
+    this.storageSvc.uploadFile(this.file)
+      .then(
+        (fullPath: string) => {
+          return {
+            name: this.form.value.name,
+            email: this.currentUser.email,
+            profilePic: fullPath,
+            firebaseUID: this.currentUser.firebaseUID
+          } as User
+        }
+      )
+      .then((editedUser) => { this.httpSvc.editUser(editedUser) })
+      .catch((err) => console.log(err))
+      .then(() => { this.router.navigate(['/']) })
   }
 }
+

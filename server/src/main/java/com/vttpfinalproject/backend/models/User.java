@@ -24,9 +24,9 @@ public class User {
     }
 
     public User(FirebaseToken fbToken) {
-        this.name = fbToken.getEmail().split("@")[0];
+        this.name = fbToken.getName().length() > 0 ? fbToken.getName() : fbToken.getEmail().split("@")[0];
         this.email = fbToken.getEmail();
-        this.profilePic = "assets/stock-profile-photo.jpeg";
+        this.profilePic = fbToken.getPicture().length() > 0 ? fbToken.getPicture() : "assets/stock-profile-photo.jpeg";
         this.firebaseUID = fbToken.getUid();
     }
 

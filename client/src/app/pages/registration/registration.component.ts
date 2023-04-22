@@ -24,11 +24,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     private router: Router,
     private location: Location,
     private authSvc: AuthService,
-    private _snackBar: MatSnackBar,
     ) { }
 
   ngOnInit(): void {
-    this.isAuthenticated$ = this.authSvc.getIsAuthenticated().subscribe((b) => this.isAuthenticated = b)
+    this.isAuthenticated$ = this.authSvc.authState$.subscribe((u) => this.isAuthenticated = !!u)
     if (!this.isAuthenticated) {this.createForm()} else {this.router.navigate(["/"])}
    }
 
@@ -47,16 +46,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     this.authSvc.createFirebaseUser({
       email: this.form.value.email,
       password: this.form.value.password
-    }).subscribe({
-      next: () => {
-        this.router.navigate(['/'])
-      },
-      error: error => {
-        this._snackBar.open(error.message, "OK", {
-          duration: 3000
-        })
-      }
-    });
-   }
- 
+    }) 
+    this.router.navigate(['/'])
+  }
+  
 }

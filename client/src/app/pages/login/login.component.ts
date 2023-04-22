@@ -3,7 +3,6 @@ import { FirebaseUISignInSuccessWithAuthResult, FirebaseUISignInFailure, Firebas
 import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 
@@ -18,7 +17,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private fb: FormBuilder,
     private authSvc: AuthService,
-    private _snackBar: MatSnackBar,
     private location: Location,
   ) { 
     this.firebaseuiAngularLibraryService.firebaseUiInstance.disableAutoSignIn();
@@ -31,8 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.isAuthenticated$ = this.authSvc.getIsAuthenticated().subscribe((b) => this.isAuthenticated = b)
-    console.log("Authentication status >> " + this.isAuthenticated)
+    this.isAuthenticated$ = this.authSvc.authState$.subscribe((u) => this.isAuthenticated = !!u)
     if (!this.isAuthenticated) {
       this.createForm()
     } else {
@@ -49,17 +46,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authSvc.login({
       email: this.form.value.email,
       password: this.form.value.password
-    }).subscribe({
-      next: () => {
-        this.authSvc.setAuthState();
-        this.router.navigate(['/']);
-      },
-      error: error => {
-        this._snackBar.open(error.message, "OK", {
-          duration: 3000
-        })
-      }
-    });
+    })
+
+    this.router.navigate(['/']);
   }
 
   // Code for firebaseAuth UI

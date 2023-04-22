@@ -25,11 +25,11 @@ export class AppComponent implements OnInit, OnDestroy{
 
   title = 'Drink Factory';
   shoppingCart$!: Subscription;
-  shoppingCart!: Drink[]
   isAuthenticated$!: Subscription;
-  isAuthenticated!: boolean;
   currentUser$!: Subscription;
-  currentUser!: User;
+  shoppingCart!: Drink[]
+  isAuthenticated!: boolean;
+  currentUserEmail!: string | null | undefined
   isHidden = true
 
   ngOnInit(): void {
@@ -38,8 +38,8 @@ export class AppComponent implements OnInit, OnDestroy{
           this.shoppingCart = cart;
           this.toggleBadgeVisibility();
         })
-      this.isAuthenticated$ = this.authSvc.getIsAuthenticated().subscribe((b) => { this.isAuthenticated = b })
-      this.currentUser$ = this.authSvc.getCurrentUser().subscribe(user => this.currentUser = user)
+      this.isAuthenticated$ = this.authSvc.authState$.subscribe((user) => this.isAuthenticated = !!user)
+      this.currentUser$ = this.authSvc.user$.subscribe((user) => this.currentUserEmail = user?.email)
   }
 
   ngOnDestroy(): void {

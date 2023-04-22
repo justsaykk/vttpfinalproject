@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CartItem } from 'src/app/models/models';
+import { HttpService } from 'src/app/services/http.service';
 import { ShoppingcartService } from 'src/app/services/shoppingcart.service';
 
 @Component({
@@ -10,11 +11,13 @@ import { ShoppingcartService } from 'src/app/services/shoppingcart.service';
 })
 export class PopupCartComponent implements OnInit, OnDestroy {
   constructor(
-    private cartSvc: ShoppingcartService, 
+    private cartSvc: ShoppingcartService,
+    private httpSvc: HttpService 
   ) { }
 
   cartItems$!: Subscription
   cartItems!: CartItem[]
+  isLoading = false;
   title: string = "Orders"
 
   ngOnInit(): void {
@@ -31,5 +34,10 @@ export class PopupCartComponent implements OnInit, OnDestroy {
 
   public removeFromCartItems(item: CartItem): void {
     this.cartSvc.removeFromShoppingCart(item.drink);
+  }
+
+  public pay(): void {
+    this.isLoading = true;
+    this.httpSvc.postCart()
   }
 }

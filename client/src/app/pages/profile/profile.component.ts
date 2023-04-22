@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription} from 'rxjs';
 import { TransactionDetail, User } from 'src/app/models/models';
 import { HttpService } from 'src/app/services/http.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,31 +13,39 @@ import { HttpService } from 'src/app/services/http.service';
 export class ProfileComponent implements OnInit, OnDestroy {
 
   transactions$!: Subscription
-  transactions!: TransactionDetail[]
   currentUser$!: Subscription
+  transactions!: TransactionDetail[]
   currentUser!: User
+  profilePicUrl!: string
   panelOpenState = false;
   isLoading = true;
 
   constructor(
     private httpSvc: HttpService,
+    private storageSvc: StorageService,
     private router: Router
     ) {  }
 
-  ngOnInit(): void {
-    this.httpSvc.getProfilefromDb()
+  async ngOnInit(){
     this.httpSvc.getTransactionsByEmail();
     this.transactions$ = this.httpSvc.getTransactionsByEmail$().subscribe((r) => {this.transactions = r})
-    this.currentUser$ = this.httpSvc.getProfile().subscribe(user => this.currentUser = user);
+    const user = await this.httpSvc.getProfilefromDb()
+    console.log(user);
+    this.currentUser$ = this.httpSvc.getProfile().subscribe((user: User) => {this.currentUser = user})
+    this.storageSvc.donwloadProfilePic(this.currentUser.firebaseUID)
+          .then((url) => this.profilePicUrl = url)
+          .catch((error) => {
+            console.log(error)
+            this.profilePicUrl = "assets/stock-profile-photo.jpeg"})
   }
 
-  ngOnDestroy(): void {
-      this.transactions$.unsubscribe()
-      this.currentUser$.unsubscribe()
+      ngOnDestroy(): void {
+          this.transactions$.unsubscribe()
+          this.currentUser$.unsubscribe()
+      }
+    
+      goToEditProfilePage() {
+        this.router.navigate(['/edit-profile'])
+      }
   }
 
-  goToEditProfilePage() {
-    this.router.navigate(['/edit-profile'])
-  }
-
-}

@@ -11,7 +11,6 @@ import { RegistrationComponent } from './pages/registration/registration.compone
 import { HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PopupCartComponent } from './components/popup-cart/popup-cart.component';
-import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { SuccessComponent } from './pages/success/success.component';
 import { SearchComponent } from './components/search/search.component';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -24,6 +23,10 @@ import { EditProfileComponent } from './pages/edit-profile/edit-profile.componen
 import { getStorage, provideStorage } from '@angular/fire/storage';
 // External UI Modules
 import { NgxShimmerLoadingModule } from  'ngx-shimmer-loading';
+import { DrinkDetailsComponent } from './pages/drink-details/drink-details.component';
+import { provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp } from 'firebase/app';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -32,13 +35,13 @@ import { NgxShimmerLoadingModule } from  'ngx-shimmer-loading';
     MenuComponent,
     RegistrationComponent,
     PopupCartComponent,
-    CheckoutComponent,
     SuccessComponent,
     SearchComponent,
     LoginComponent,
     ProfileComponent,
     LogoutMockComponent,
     EditProfileComponent,
+    DrinkDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,11 +53,11 @@ import { NgxShimmerLoadingModule } from  'ngx-shimmer-loading';
     NgxPaginationModule,
     FirebaseAuthModule,
     NgxShimmerLoadingModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
   ],
-  providers: [
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

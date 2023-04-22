@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, map, take } from 'rxjs';
 import { CartItem, Drink } from '../models/models';
 
 @Injectable({
@@ -22,10 +22,10 @@ export class ShoppingcartService {
     shoppingCart$ = this.getShoppingCartItems().subscribe(
       (currentCart: Drink[]) => {shoppingCart = currentCart;}
     );
-    shoppingCart$.unsubscribe()
     shoppingCart = [...shoppingCart,drink]
     this._shoppingCart.next(shoppingCart)
     this._cartItems.next(this.createCartItems(shoppingCart));
+    shoppingCart$.unsubscribe()
   }
 
   public removeFromShoppingCart(_drink: Drink): void {
@@ -34,11 +34,11 @@ export class ShoppingcartService {
     shoppingCart$ = this.getShoppingCartItems().subscribe(
       (currentCart: Drink[]) => {shoppingCart = currentCart;}
     );
-    shoppingCart$.unsubscribe()
     let idx = shoppingCart.findIndex(drink => _drink.idDrink === drink.idDrink);
     shoppingCart.splice(idx, 1);
     this._shoppingCart.next(shoppingCart)
     this._cartItems.next(this.createCartItems(shoppingCart));
+    shoppingCart$.unsubscribe()
   }
 
   private createCartItems(_shoppingCart: Drink[]): CartItem[] {
