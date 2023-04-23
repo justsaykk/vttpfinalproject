@@ -2,10 +2,8 @@ import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { StorageReference, UploadResult, getDownloadURL, getStorage, ref } from 'firebase/storage';
-import { Subscription, firstValueFrom, lastValueFrom } from 'rxjs';
+import { Subscription} from 'rxjs';
 import { User } from 'src/app/models/models';
-import { AuthService } from 'src/app/services/auth.service';
 import { HttpService } from 'src/app/services/http.service';
 import { StorageService } from 'src/app/services/storage.service';
 

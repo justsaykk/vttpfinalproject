@@ -9,15 +9,17 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { LogoutMockComponent } from './shared/logout-mock/logout-mock.component';
 import { authGuard } from './services/auth.guard';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { DrinkDetailsComponent } from './pages/drink-details/drink-details.component';
 
 const routes:Routes = [
   {path: "", component: HomeComponent},
   {path: "registration", component: RegistrationComponent},
   {path: "menu", component: MenuComponent},
   {path: "payment/success", component: SuccessComponent},
+  {path: "login", component: LoginComponent},
+  {path: "drink/:drinkId", component: DrinkDetailsComponent},
   {path: "profile",component: ProfileComponent, canActivate: [authGuard]},
   {path: "edit-profile",component: EditProfileComponent, canActivate: [authGuard]},
-  {path: "login", component: LoginComponent},
   {path: "payment/cancel", redirectTo:"menu", pathMatch: "full"},
   {path: "logout", component: LogoutMockComponent},
   {path: "**", redirectTo: "/", pathMatch: "full"}

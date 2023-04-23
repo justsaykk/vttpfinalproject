@@ -29,8 +29,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   async ngOnInit(){
     this.httpSvc.getTransactionsByEmail();
     this.transactions$ = this.httpSvc.getTransactionsByEmail$().subscribe((r) => {this.transactions = r})
-    const user = await this.httpSvc.getProfilefromDb()
-    console.log(user);
+    await this.httpSvc.getProfilefromDb()
     this.currentUser$ = this.httpSvc.getProfile().subscribe((user: User) => {this.currentUser = user})
     this.storageSvc.donwloadProfilePic(this.currentUser.firebaseUID)
           .then((url) => this.profilePicUrl = url)
@@ -46,6 +45,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     
       goToEditProfilePage() {
         this.router.navigate(['/edit-profile'])
+      }
+
+      goToDrinkDetail(idDrink: string) {
+        this.router.navigate([`drink/${idDrink}`])
       }
   }
 

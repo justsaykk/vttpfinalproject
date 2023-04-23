@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, firstValueFrom, map, Observable, switchMap } from 'rxjs';
-import { CartItem, Drink, TransactionDetail, User } from '../models/models';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
+import { CartItem, DetailedDrink, Drink, TransactionDetail, User } from '../models/models';
 import { ShoppingcartService } from './shoppingcart.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
@@ -16,7 +16,6 @@ export class HttpService {
     private http:HttpClient, 
     private cart: ShoppingcartService,
     private authSvc: AuthService,
-    private router: Router,
     ) { }
 
   // Section of Behavior Subjects
@@ -45,6 +44,12 @@ export class HttpService {
 
     firstValueFrom(this.http.get<{result: Drink[]}>(searchUrl, {params}))
       .then((r) => { this._listOfDrinks.next(r.result) })
+  }
+
+  public async getDrinksById(drinkId: string): Promise<DetailedDrink> {
+    let url: string = `${this.BASE_URL}/drink/${drinkId}`;
+    const detailedDrink = await firstValueFrom(this.http.get<DetailedDrink>(url))
+    return detailedDrink;
   }
 
   public postCart(): void {

@@ -24,7 +24,7 @@
                 <mat-grid-tile *ngFor="let drink of listOfDrinks | paginate: {itemsPerPage: 10, currentPage: currentPage}">
                     <mat-card style="height: fit-content; box-sizing: border-box;">
                         <mat-card-content style="border-radius: inherit;">
-                            <img mat-card-image [src]="drink.strDrinkThumb" style="height: 222.57px;">
+                            <img mat-card-image [src]="drink.strDrinkThumb" style="height: 222.57px; cursor: pointer;" (click)="goToDrinkDetail(drink.idDrink)">
                             <p style="font-weight: bold;">
                                 {{drink.strDrink}}
                             </p>

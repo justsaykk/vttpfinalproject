@@ -29,3 +29,12 @@ export interface User {
     profilePic: string
     firebaseUID: string
 }
+
+export interface DetailedDrink {
+    idDrink: string,
+    strDrink: string,
+    strDrinkThumb: string,
+    strDrinkImage: string,
+    strInstructions: string,
+    [key: string] : string
+}
