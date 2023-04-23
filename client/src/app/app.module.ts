@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, SecurityContext, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -8,7 +8,7 @@ import { MaterialModule } from './material/material.module';
 import { HomeComponent } from './pages/home/home.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClient, HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PopupCartComponent } from './components/popup-cart/popup-cart.component';
 import { SuccessComponent } from './pages/success/success.component';
@@ -27,6 +27,9 @@ import { DrinkDetailsComponent } from './pages/drink-details/drink-details.compo
 import { provideFirebaseApp } from '@angular/fire/app';
 import { initializeApp } from 'firebase/app';
 import { environment } from 'src/environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { AboutComponent } from './pages/about/about.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [
@@ -42,6 +45,7 @@ import { environment } from 'src/environments/environment';
     LogoutMockComponent,
     EditProfileComponent,
     DrinkDetailsComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +60,13 @@ import { environment } from 'src/environments/environment';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideStorage(() => getStorage()),
+    MarkdownModule.forRoot({ loader: HttpClient, sanitize: SecurityContext.NONE }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

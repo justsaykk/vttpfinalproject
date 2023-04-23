@@ -30,8 +30,8 @@ integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1
         <mat-nav-list>
             <a mat-list-item (click)="sidenav.toggle()" routerLink="/">Home</a>
             <a mat-list-item (click)="sidenav.toggle()" routerLink="/menu">Menu</a>
-            <a mat-list-item (click)="sidenav.toggle()" 
-                routerLink="/profile" *ngIf="isAuthenticated">Profile</a>
+            <a mat-list-item (click)="sidenav.toggle()" routerLink="/profile" *ngIf="isAuthenticated">Profile</a>
+            <a mat-list-item (click)="sidenav.toggle()" routerLink="/about">About this app</a>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

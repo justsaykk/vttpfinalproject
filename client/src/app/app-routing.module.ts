@@ -10,6 +10,7 @@ import { LogoutMockComponent } from './shared/logout-mock/logout-mock.component'
 import { authGuard } from './services/auth.guard';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { DrinkDetailsComponent } from './pages/drink-details/drink-details.component';
+import { AboutComponent } from './pages/about/about.component';
 
 const routes:Routes = [
   {path: "", component: HomeComponent},
@@ -18,6 +19,7 @@ const routes:Routes = [
   {path: "payment/success", component: SuccessComponent},
   {path: "login", component: LoginComponent},
   {path: "drink/:drinkId", component: DrinkDetailsComponent},
+  {path: "about", component: AboutComponent},
   {path: "profile",component: ProfileComponent, canActivate: [authGuard]},
   {path: "edit-profile",component: EditProfileComponent, canActivate: [authGuard]},
   {path: "payment/cancel", redirectTo:"menu", pathMatch: "full"},
