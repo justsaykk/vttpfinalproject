@@ -20,40 +20,42 @@
             </div>
         </div>
 
-        <div class="container marketing">
-            <div class="row">
-                <div class="col-lg-4">
-                    <img src="https://www.thecocktaildb.com/images/media/drink/5noda61589575158.jpg/preview" alt=""
-                        class="bd-placeholder-img rounded-circle" width="140" height="140" role="img"
-                        aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+        <div style="display: flex; flex-direction: row; align-items: top; justify-content: center;">
+            <mat-card class="card-container" fxLayout="column" fxLayoutAlign="start center">
+              <img mat-card-image src="https://www.thecocktaildb.com/images/media/drink/5noda61589575158.jpg/preview" alt="Drink Image" routerLink="/drink/11007" style="cursor: pointer;">
+              <mat-card-content>
+                <h2 class="card-title">Margarita</h2>
+                <p class="card-text">The margarita is a cocktail consisting of tequila, orange liqueur, and lime juice often served
+                    with salt on the rim of the
+                    glass. The drink is served shaken with ice, blended with ice, or without ice.</p>
+                </mat-card-content>
+                <mat-card-actions align="end" style="margin-top: auto;">
+                    <button mat-raised-button color="primary" routerLink="/drink/11007">Find Out More</button>
+              </mat-card-actions>
+            </mat-card>
 
-                    <h2 class="fw-normal">Margarita</h2>
-                    <p>The margarita is a cocktail consisting of tequila, orange liqueur, and lime juice often served
-                        with salt on the rim of the
-                        glass. The drink is served shaken with ice, blended with ice, or without ice.</p>
-                    <p><a class="btn btn-secondary" href="/drink?idDrink=11007">Find Out More &raquo;</a></p>
-                </div>
+            <mat-card class="card-container" fxLayout="column" fxLayoutAlign="start center">
+                <img mat-card-image src="https://www.thecocktaildb.com/images/media/drink/2dwae41504885321.jpg/preview" alt="Drink Image" routerLink="/drink/15224" style="cursor: pointer;">
+                <mat-card-content>
+                  <h2 class="card-title">Malibu Twister</h2>
+                  <p class="card-text">This cranberry juice-based solid cocktail is made with 2 other ingredients: malibu coconut rum,
+                    tropicana orange juice.</p>
+                </mat-card-content>
+                <mat-card-actions align="end" style="margin-top: auto;">
+                    <button mat-raised-button color="primary" routerLink="/drink/15224">Find Out More</button>
+                </mat-card-actions>
+              </mat-card>
 
-                <div class="col-lg-4">
-                    <img src="https://www.thecocktaildb.com/images/media/drink/2dwae41504885321.jpg/preview" alt=""
-                        class="bd-placeholder-img rounded-circle" width="140" height="140" role="img"
-                        aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
-
-                    <h2 class="fw-normal">Malibu Twister</h2>
-                    <p>This cranberry juice-based solid cocktail is made with 2 other ingredients: malibu coconut rum,
-                        tropicana orange juice.</p>
-                    <p><a class="btn btn-secondary" href="/drink?idDrink=15224">Find Out More &raquo;</a></p>
-                </div>
-                <div class="col-lg-4">
-                    <img src="https://www.thecocktaildb.com/images/media/drink/tpxurs1454513016.jpg/preview" alt=""
-                        class="bd-placeholder-img rounded-circle" width="140" height="140" role="img"
-                        aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
-
-                    <h2 class="fw-normal">Adam Bomb</h2>
-                    <p>This is a fruit based mixture that has Rum, Vodka and Tequila.</p>
-                    <p><a class="btn btn-secondary" href="/drink?idDrink=16333">Find Out More &raquo;</a></p>
-                </div>
-            </div>
-        </div>
+              <mat-card class="card-container" fxLayout="column" fxLayoutAlign="start center">
+                <img mat-card-image src="https://www.thecocktaildb.com/images/media/drink/tpxurs1454513016.jpg/preview" alt="Drink Image" routerLink="/drink/16333" style="cursor: pointer;">
+                <mat-card-content>
+                  <h2 class="card-title">Adam Bomb</h2>
+                  <p class="card-text">This is a fruit based mixture that has Rum, Vodka and Tequila.</p>
+                </mat-card-content>
+                <mat-card-actions align="end" style="margin-top: auto;">
+                    <button mat-raised-button color="primary" routerLink="/drink/16333">Find Out More</button>
+                </mat-card-actions>
+              </mat-card>
+          </div>
     </main>
 </body>

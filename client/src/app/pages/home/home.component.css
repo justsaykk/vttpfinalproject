@@ -142,3 +142,19 @@ footer {
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
 }
+
+.card-container {
+    max-width: 350px;
+    margin: 20px;
+    padding: 10px;
+  }
+  
+  .card-title {
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .card-text {
+    margin-bottom: 10px;
+  }
+  
