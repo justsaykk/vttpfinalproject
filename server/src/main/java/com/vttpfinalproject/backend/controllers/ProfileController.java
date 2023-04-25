@@ -100,6 +100,7 @@ public class ProfileController {
         }
 
         if (userSvc.updateUser(user)) {
+            System.out.println("Updating user" + user.toString());
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
