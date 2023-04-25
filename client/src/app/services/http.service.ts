@@ -100,6 +100,6 @@ export class HttpService {
       .set('Authorization', `Bearer ${idToken}`)
       .set('Content-Type', "application/json")
       
-    this.http.put(url, user, {headers})
+    this.http.post(url, user, {headers})
   }
 }
