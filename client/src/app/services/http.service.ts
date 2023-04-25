@@ -99,7 +99,9 @@ export class HttpService {
       .set("Accept", "application/json")
       .set('Authorization', `Bearer ${idToken}`)
       .set('Content-Type', "application/json")
-      
-    this.http.post(url, user, {headers})
+    
+    firstValueFrom(
+      this.http.post(url, user, {headers})
+    )
   }
 }
