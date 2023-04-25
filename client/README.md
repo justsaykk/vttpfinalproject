@@ -33,7 +33,8 @@
 ### Instructions for Instructors
 
 1. You can create your profile by clicking on the sign up link during login or if you prefer, you could also use your google account.
-2. When you're checking out, please use the following details for a successful checkout process:
+2. To create the account, the password needs to be longer than 6 characters. You can use any email you want.
+3. When you're checking out, please use the following details for a successful checkout process:
 
     ```xml
     Email: your-login-email@email.com
@@ -46,4 +47,4 @@
     Click "Pay"
     ```
 
-3. Upon successful transaction, you will be redirected back to the app.
+4. Upon successful transaction, you will be redirected back to the app.
