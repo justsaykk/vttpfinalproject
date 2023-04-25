@@ -89,7 +89,7 @@ public class ProfileController {
         }
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "edit",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateProfile (
         @RequestBody User user,
         @RequestHeader("Authorization") String tokenString

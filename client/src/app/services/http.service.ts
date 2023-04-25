@@ -91,7 +91,7 @@ export class HttpService {
   }
 
   public async editUser(user: User) {
-    let url: string = `${this.BASE_URL}/profile`;
+    let url: string = `${this.BASE_URL}/profile/edit`;
     let idToken = await firstValueFrom(this.authSvc.idToken$)
 
     let headers = new HttpHeaders()
