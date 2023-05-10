@@ -1,13 +1,13 @@
 package com.vttpfinalproject.backend.controllers;
 
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +40,7 @@ public class ProfileController {
     @GetMapping(path = "/transactions", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getTransactionsByEmail(
         @RequestHeader("Authorization") String tokenString
-    ) {
+    ) throws InterruptedException, ExecutionException {
         Optional<FirebaseToken> optFbToken = this.authSvc.verifyFirebaseToken(tokenString);
         if (optFbToken.isEmpty()) {
             return new ResponseEntity<String>("Invalid token", HttpStatus.FORBIDDEN);
@@ -55,7 +55,7 @@ public class ProfileController {
     @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getProfile(
         @RequestHeader("Authorization") String tokenString
-    ) {
+    ) throws InterruptedException, ExecutionException {
         Optional<FirebaseToken> optFbToken = this.authSvc.verifyFirebaseToken(tokenString);
         if (optFbToken.isEmpty()) {
             return new ResponseEntity<String>("Invalid token", HttpStatus.FORBIDDEN);
@@ -80,12 +80,8 @@ public class ProfileController {
         if (optFbToken.isEmpty()) {
             return new ResponseEntity<String>("Invalid token", HttpStatus.FORBIDDEN);
         }
-        
-        if (userSvc.createUser(user)) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        userSvc.createUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(path = "edit",consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -97,29 +93,7 @@ public class ProfileController {
         if (optFbToken.isEmpty()) {
             return new ResponseEntity<String>("Invalid token", HttpStatus.FORBIDDEN);
         }
-
-        if (userSvc.updateUser(user)) {
-            System.out.println("Updating user" + user.toString());
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> deleteProfile (
-        @RequestBody User user,
-        @RequestHeader("Authorization") String tokenString
-    ) {
-        Optional<FirebaseToken> optFbToken = this.authSvc.verifyFirebaseToken(tokenString);
-        if (optFbToken.isEmpty()) {
-            return new ResponseEntity<String>("Invalid token", HttpStatus.FORBIDDEN);
-        }
-
-        if (userSvc.deleteUser(user)) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        userSvc.createUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -14,11 +14,6 @@ public class UserTable {
     @Autowired
     private JdbcTemplate repo;
 
-
-    public SqlRowSet getUserByEmail(String email) {
-        return repo.queryForRowSet(SQL_GET_USERS_BY_EMAIL, email);
-    }
-
     public SqlRowSet getUserByUID(String firebaseUID) {
         return repo.queryForRowSet(SQL_GET_USERS_BY_UID, firebaseUID);
     }
