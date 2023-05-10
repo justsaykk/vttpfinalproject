@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class HttpService {
-  BASE_URL: string = "https://drinkfactorybackend-production.up.railway.app/api"
+  // BASE_URL: string = "https://drinkfactorybackend-production.up.railway.app/api"
+  BASE_URL: string = "https://drink-factory-backend-655u6voleq-as.a.run.app";
   constructor(
     private http:HttpClient, 
     private cart: ShoppingcartService,
