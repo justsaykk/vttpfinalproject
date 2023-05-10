@@ -1,20 +1,20 @@
-package com.vttpfinalproject.backend.repository;
+// package com.vttpfinalproject.backend.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.jdbc.core.JdbcTemplate;
+// import org.springframework.stereotype.Repository;
 
-import com.vttpfinalproject.backend.models.MySqlCheckoutSession;
-import static com.vttpfinalproject.backend.repository.SqlQueries.*;
+// import com.vttpfinalproject.backend.models.MySqlCheckoutSession;
+// import static com.vttpfinalproject.backend.repository.SqlQueries.*;
 
-@Repository
-public class TransactionTable {
+// @Repository
+// public class TransactionTable {
 
-    @Autowired
-    private JdbcTemplate repo;
+//     @Autowired
+//     private JdbcTemplate repo;
     
-    public void insertNewTransaction(MySqlCheckoutSession mySqlCheckoutSession) {
-            repo.update(SQL_INSERT_TRANSACTION, mySqlCheckoutSession.getSession_id(), mySqlCheckoutSession.getAmount_total());
-            System.out.println("Inserting new SQL transaction");
-    }
-}
+//     public void insertNewTransaction(MySqlCheckoutSession mySqlCheckoutSession) {
+//             repo.update(SQL_INSERT_TRANSACTION, mySqlCheckoutSession.getSession_id(), mySqlCheckoutSession.getAmount_total());
+//             System.out.println("Inserting new SQL transaction");
+//     }
+// }

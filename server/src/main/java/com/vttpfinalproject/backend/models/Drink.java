@@ -2,7 +2,7 @@ package com.vttpfinalproject.backend.models;
 
 import java.util.Random;
 
-import org.bson.Document;
+// import org.bson.Document;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
@@ -29,13 +29,13 @@ public class Drink {
         this.price = random.nextInt(11) + 5;
     }
 
-    public Drink(Document doc) {
-        this.idDrink = doc.getString("idDrink");
-        this.strDrink = doc.getString("strDrink");
-        this.strDrinkImage = doc.getString("strDrinkImage");
-        this.strDrinkThumb = this.strDrinkImage + "/preview";
-        this.price = doc.getInteger("price");
-    }
+    // public Drink(Document doc) {
+    //     this.idDrink = doc.getString("idDrink");
+    //     this.strDrink = doc.getString("strDrink");
+    //     this.strDrinkImage = doc.getString("strDrinkImage");
+    //     this.strDrinkThumb = this.strDrinkImage + "/preview";
+    //     this.price = doc.getInteger("price");
+    // }
 
     public JsonObject toJson() {
         return Json.createObjectBuilder()

@@ -1,10 +1,9 @@
 package com.vttpfinalproject.backend.models;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.bson.Document;
+// import org.bson.Document;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.LineItem;
@@ -37,20 +36,20 @@ public class TransactionDetail {
         this.cartItems = this.toListCartItems(session.listLineItems(params).getData());
     }
 
-    public TransactionDetail(Document doc) {
-        this.session_id = doc.getString("session_id");
-        this.customer_email = doc.getString("customer_email");
-        this.customer_phone = doc.getString("customer_phone");
-        List<CartItem> toSetList = new ArrayList<>();
-        List<Document> listOfCartItemDocs = doc.getList("cartItems", Document.class);
-        listOfCartItemDocs.stream().forEach((docCartItem) -> {
-            CartItem cartItem = new CartItem();
-            cartItem.setQuantity(docCartItem.getInteger("quantity"));
-            cartItem.setDrink(new Drink(docCartItem.get("drink", Document.class)));
-            toSetList.add(cartItem);
-        });
-        this.cartItems = toSetList;
-    }
+    // public TransactionDetail(Document doc) {
+    //     this.session_id = doc.getString("session_id");
+    //     this.customer_email = doc.getString("customer_email");
+    //     this.customer_phone = doc.getString("customer_phone");
+    //     List<CartItem> toSetList = new ArrayList<>();
+    //     List<Document> listOfCartItemDocs = doc.getList("cartItems", Document.class);
+    //     listOfCartItemDocs.stream().forEach((docCartItem) -> {
+    //         CartItem cartItem = new CartItem();
+    //         cartItem.setQuantity(docCartItem.getInteger("quantity"));
+    //         cartItem.setDrink(new Drink(docCartItem.get("drink", Document.class)));
+    //         toSetList.add(cartItem);
+    //     });
+    //     this.cartItems = toSetList;
+    // }
     
     private int longToInt(Long l) {
         return Integer.parseInt(Long.toString(l));

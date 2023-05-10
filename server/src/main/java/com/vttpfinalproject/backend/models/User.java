@@ -1,6 +1,6 @@
 package com.vttpfinalproject.backend.models;
 
-import org.springframework.jdbc.support.rowset.SqlRowSet;
+// import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import com.google.firebase.auth.FirebaseToken;
 
@@ -16,12 +16,12 @@ public class User {
     private String profilePic;
     private String firebaseUID;
 
-    public User(SqlRowSet rs) {
-        this.name = rs.getString("name");
-        this.email = rs.getString("email");
-        this.profilePic = rs.getString("profilePic");
-        this.firebaseUID = rs.getString("firebaseUID");
-    }
+    // public User(SqlRowSet rs) {
+    //     this.name = rs.getString("name");
+    //     this.email = rs.getString("email");
+    //     this.profilePic = rs.getString("profilePic");
+    //     this.firebaseUID = rs.getString("firebaseUID");
+    // }
 
     public User(FirebaseToken fbToken) {
         this.name = null != fbToken.getName() ? fbToken.getName() : fbToken.getEmail().split("@")[0];

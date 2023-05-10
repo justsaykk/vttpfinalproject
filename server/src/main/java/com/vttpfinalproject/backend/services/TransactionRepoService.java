@@ -20,25 +20,16 @@ import jakarta.json.JsonArrayBuilder;
 @Service
 public class TransactionRepoService {
 
-    // @Autowired
-    // private TransactionTable transactionRepo;
-    // @Autowired
-    // private TransactionDetailsRepo detailsRepo;
-    // @Autowired
-    // private SmsService sms;
     @Autowired
     private FirebaseDb firebaseDb;
 
     public void addTransaction(Session session) throws StripeException {
         System.out.println("Adding to transaction DBs");
         TransactionDetail tDetail = new TransactionDetail(session);
-        // transactionRepo.insertNewTransaction(new MySqlCheckoutSession(session));
-        // detailsRepo.insertNewTransaction(tDetail);
         firebaseDb.insertNewTransaction(tDetail);
     }
 
     public JsonArrayBuilder getTransactionsByEmail(String email) throws InterruptedException, ExecutionException {
-        // List<TransactionDetail> tDetailList = detailsRepo.getTransactionByEmail(email);
         List<TransactionDetail> tDetailList = firebaseDb.getTransactionByEmail(email);
         JsonArrayBuilder jab = Json.createArrayBuilder();
         tDetailList.stream().forEach((tDetail) -> {
