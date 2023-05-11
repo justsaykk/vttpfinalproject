@@ -27,8 +27,7 @@ public class FirebaseDb {
 
     /* Transaction Collection Methods */
     public void insertNewTransaction(TransactionDetail tDetail) {
-        DocumentReference reference = this.db.collection("transactions").document();
-        reference.set(tDetail);
+        this.db.collection("transactions").document().set(tDetail);
     }
 
     public List<TransactionDetail> getTransactionByEmail(String email) throws InterruptedException, ExecutionException {

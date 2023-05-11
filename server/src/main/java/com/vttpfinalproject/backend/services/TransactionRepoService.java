@@ -10,9 +10,6 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.vttpfinalproject.backend.models.TransactionDetail;
 import com.vttpfinalproject.backend.repository.FirebaseDb;
-// import com.vttpfinalproject.backend.models.MySqlCheckoutSession;
-// import com.vttpfinalproject.backend.repository.TransactionDetailsRepo;
-// import com.vttpfinalproject.backend.repository.TransactionTable;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArrayBuilder;

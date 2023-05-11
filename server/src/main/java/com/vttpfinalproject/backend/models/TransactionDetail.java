@@ -3,8 +3,6 @@ package com.vttpfinalproject.backend.models;
 import java.util.LinkedList;
 import java.util.List;
 
-// import org.bson.Document;
-
 import com.stripe.exception.StripeException;
 import com.stripe.model.LineItem;
 import com.stripe.model.Price;
@@ -35,21 +33,6 @@ public class TransactionDetail {
         this.customer_phone = customerDetails.getPhone();
         this.cartItems = this.toListCartItems(session.listLineItems(params).getData());
     }
-
-    // public TransactionDetail(Document doc) {
-    //     this.session_id = doc.getString("session_id");
-    //     this.customer_email = doc.getString("customer_email");
-    //     this.customer_phone = doc.getString("customer_phone");
-    //     List<CartItem> toSetList = new ArrayList<>();
-    //     List<Document> listOfCartItemDocs = doc.getList("cartItems", Document.class);
-    //     listOfCartItemDocs.stream().forEach((docCartItem) -> {
-    //         CartItem cartItem = new CartItem();
-    //         cartItem.setQuantity(docCartItem.getInteger("quantity"));
-    //         cartItem.setDrink(new Drink(docCartItem.get("drink", Document.class)));
-    //         toSetList.add(cartItem);
-    //     });
-    //     this.cartItems = toSetList;
-    // }
     
     private int longToInt(Long l) {
         return Integer.parseInt(Long.toString(l));
@@ -69,6 +52,7 @@ public class TransactionDetail {
                     drink.setStrDrink(productObj.getName());
                     String drinkImage = productObj.getImages().get(0);
                     drink.setStrDrinkImage(drinkImage);
+                    drink.setStrDrinkThumb(drinkImage + "/preview");
                     drink.setIdDrink(productObj.getId().substring(0, productObj.getId().length() - 9));
                 } catch (StripeException e) {
                     e.printStackTrace();
